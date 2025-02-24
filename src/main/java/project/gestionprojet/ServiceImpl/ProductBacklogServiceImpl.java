@@ -26,11 +26,6 @@ public class ProductBacklogServiceImpl implements ProductBacklogService {
     }
 
     @Override
-    public ProductBacklog deleteProductBacklog(int idProductBacklog) {
-        return productBacklogRepo.deleteById(idProductBacklog) ;
-    }
-
-    @Override
     public ProductBacklog updateProductBacklog(int id ,ProductBacklog productBacklog) {
         Optional<ProductBacklog> existingBacklogOptional = productBacklogRepo.findById(id);
 
@@ -45,6 +40,12 @@ public class ProductBacklogServiceImpl implements ProductBacklogService {
         }
 
         return productBacklogRepo.save(existingBacklog);
+    }
+
+
+    @Override
+    public ProductBacklog deleteProductBacklog(int idProductBacklog) {
+        return productBacklogRepo.deleteById(idProductBacklog) ;
     }
 
 
