@@ -20,12 +20,10 @@ public class SprintBacklog {
 
 
     @OneToMany
-    private List<UserStory> userSories ;
-
-    @OneToMany
-    private List<Task> tasks;
+    private List<Epic> epics ;
 
     public SprintBacklog(String nom) {
         this.nom = nom;
     }
+
 }

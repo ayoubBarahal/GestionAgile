@@ -19,7 +19,14 @@ public class Epic {
     private String titre;
     private String description;
 
+    @ManyToOne
+    private ProductBacklog productBacklog;
+
     @OneToMany(mappedBy = "epic")
     private List<UserStory> userStories;
+
+    @OneToMany
+    private List<SprintBacklog> sprintBacklogs;
+
 
 }

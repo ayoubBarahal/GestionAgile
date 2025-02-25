@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -20,9 +22,7 @@ public class UserStory {
 
     @ManyToOne
     private Epic epic;
-    @ManyToOne
-    private ProductBacklog productBacklog;
-    @ManyToOne
-    private SprintBacklog sprintBacklog;
+    @OneToMany
+    private List<Task> tasks ;
 
 }

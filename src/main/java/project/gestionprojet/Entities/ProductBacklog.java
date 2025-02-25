@@ -21,8 +21,7 @@ public class ProductBacklog {
     @OneToMany
     private List<Epic> epics ;
 
-    @OneToMany
-    private List<UserStory> userStories ;
+
 
     public ProductBacklog(String nom ){
         this.nom=nom ;
