@@ -56,4 +56,31 @@ public class ProjetTest {
         ProjetDTO projetTest = projetService.getProjetByName(projet.getNomProjet());
         assertNotNull(projetTest);
     }
+    @Test
+    public void modifier() {
+        projet.setNomProjet("Projet Updated");
+        ProjetDTO projetDTO=new ProjetDTO(projet.getIdProjet(),"projet updated");
+        Projet projetTest = projetService.updateProjet(projetDTO.getIdProjet(),projetDTO);
+        assertNotNull(projetTest);
+
+    }
+
+    @Test
+    public void getProjet(){
+        Projet projetTest = projetService.getProjet(projet.getIdProjet());
+        assertNotNull(projetTest, "ce projet n'existe pas");
+    }
+
+    @Test
+    public void getProjets(){
+        List<Projet> projetsTest = projetService.getProjets();
+        assertNotNull(projetsTest);
+    }
+
+    @Test
+    public void getProjetByName(){
+        Projet projetTest = projetService.getProjetByName(projet.getNomProjet());
+        assertNotNull(projetTest);
+    }
+
 }
