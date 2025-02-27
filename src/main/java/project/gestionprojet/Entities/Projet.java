@@ -11,10 +11,10 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Projet {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idProjet;
-
     private String nomProjet;
+
 
     public Projet(String nomProjet) {
         this.nomProjet = nomProjet;

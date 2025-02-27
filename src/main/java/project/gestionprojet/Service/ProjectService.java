@@ -9,9 +9,9 @@ public interface ProjectService {
     Projet addProjet(Projet projet);
     Projet updateProjet(int id, ProjetDTO projet);
     Projet getProjet(int id);
-    List<Projet> getProjets();
-    Projet deleteProjet(int id);
-    Projet getProjetByName(String projetName);
+   List<Projet> getProjets();
+  Projet deleteProjet(int id);
+   Projet getProjetByName(String projetName);
 
 
 }

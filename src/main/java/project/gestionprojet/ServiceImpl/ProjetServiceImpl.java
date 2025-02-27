@@ -3,8 +3,9 @@ package project.gestionprojet.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.gestionprojet.DTO.ProjetDTO;
+import project.gestionprojet.Entities.ProductBacklog;
 import project.gestionprojet.Entities.Projet;
-import project.gestionprojet.Repositories.ProjectRepo;
+import project.gestionprojet.Repositories.ProjetRepo;
 import project.gestionprojet.Service.ProjectService;
 
 import java.util.List;
@@ -12,48 +13,39 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
-public class ProjetServiceImpl implements ProjectService{
-    @Autowired
-    private  ProjectRepo projectRepo;
+public class ProjetServiceImpl implements ProjectService {
 
+
+    @Autowired
+    private ProjetRepo projetRepo;
 
     @Override
     public Projet addProjet(Projet projet) {
-       try{
-        Optional<Projet> projetOptional = projectRepo.findById(projet.getIdProjet());
-            if (projetOptional.isPresent()) {
-                throw new IllegalStateException("projet existe deja");
-            }
-       }catch (NullPointerException e) {
-           e.printStackTrace();
-       }
-        return projectRepo.save(projet);
+        return projetRepo.save(projet);
     }
 
     @Override
     public Projet updateProjet(int id, ProjetDTO projet) {
-        boolean exist = projectRepo.existsById(projet.getIdProjet());
+        boolean exist = projetRepo.existsById(projet.getIdProjet());
         if (!exist) {
             throw new IllegalStateException("projet n'existe pas");
         }
         else {
-            Optional<Projet> projetOptional = projectRepo.findById(id);
-            Projet projetToUpdate = null;
-            if (projetOptional.isPresent()) {
-                projetToUpdate = projetOptional.get();
-                if(!Objects.equals(projet.getNomProjet(), projetToUpdate.getNomProjet())) {
-                    projetToUpdate.setNomProjet(projet.getNomProjet());
+            Optional<Projet> projetToUpdate = projetRepo.findById(id);
+            if (projetToUpdate.isPresent()) {
+                if(!Objects.equals(projet.getNomProjet(), projetToUpdate.get().getNomProjet())) {
+                    projetToUpdate.get().setNomProjet(projet.getNomProjet());
                 }
             }
-            assert projetToUpdate != null:new IllegalStateException("projet n'est pas mis a jour correctement");
-            return projectRepo.save(projetToUpdate);
-
+            System.out.println("ach katkhawar a khay younesse");
+            assert projetToUpdate.isPresent() :new IllegalStateException("projet n'est pas mis a jour correctement");
+            return projetRepo.save(projetToUpdate.get());
         }
     }
 
     @Override
     public Projet getProjet(int id) {
-        Optional<Projet> projetOptional = projectRepo.findById(id);
+        Optional<Projet> projetOptional = projetRepo.findById(id);
         if (projetOptional.isEmpty()) {
             throw new IllegalStateException("le projet n'existe pas");
         }
@@ -62,7 +54,7 @@ public class ProjetServiceImpl implements ProjectService{
 
     @Override
     public List<Projet> getProjets() {
-        return projectRepo.findAll();
+        return projetRepo.findAll();
     }
 
     @Override
@@ -72,10 +64,11 @@ public class ProjetServiceImpl implements ProjectService{
 
     @Override
     public Projet getProjetByName(String projetName) {
-        Projet projet = projectRepo.findByNomProjet(projetName);
+        Projet projet = projetRepo.findByNomProjet(projetName);
         if (projet == null) {
             throw new IllegalStateException("projet n'existe pas");
         }
-       return projectRepo.findByNomProjet(projetName);
+        return projet;
     }
+
 }
