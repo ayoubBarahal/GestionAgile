@@ -9,5 +9,5 @@ import project.gestionprojet.Entities.ProductBacklog;
 public interface ProductBacklogRepo extends JpaRepository<ProductBacklog, Integer> {
     ProductBacklog save(ProductBacklog productBacklog);
     ProductBacklog findByNom(String nom);
-    ProductBacklog deleteById(int id);
+    ProductBacklog deleteByIdProductBacklog(int id);
 }

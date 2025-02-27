@@ -1,0 +1,12 @@
+package project.gestionprojet.Repositories;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import project.gestionprojet.Entities.Projet;
+
+
+
+public interface ProjectRepo extends JpaRepository<Projet, Integer> {
+    Projet save(Projet projet);
+    Projet findByNomProjet(String projetName);
+}

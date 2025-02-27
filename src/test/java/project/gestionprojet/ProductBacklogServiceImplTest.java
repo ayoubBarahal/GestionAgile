@@ -39,7 +39,7 @@ class ProductBacklogServiceImplTest {
 
     @Test
     void find(){
-        Optional<ProductBacklog> result = productBacklogService.findProductBacklogByNom(productBacklog.getNom());
+        ProductBacklog result = productBacklogService.findProductBacklogByNom(productBacklog.getNom());
         assertNotNull(result);
     }
 
