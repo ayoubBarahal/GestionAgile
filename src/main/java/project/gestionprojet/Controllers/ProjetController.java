@@ -6,15 +6,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import project.gestionprojet.Entities.Projet;
-import project.gestionprojet.Service.ProjectService;
+import project.gestionprojet.Service.ProjetService;
 
 @RestController
 @RequestMapping("/api")
 public class ProjetController {
 
-    private static ProjectService projectService;
+    private static ProjetService projectService;
     @Autowired
-    public ProjetController(ProjectService projectService) {
+    public ProjetController(ProjetService projectService) {
         ProjetController.projectService = projectService;
     }
 

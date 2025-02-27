@@ -5,7 +5,7 @@ import project.gestionprojet.Entities.Projet;
 import java.util.List;
 
 
-public interface ProjectService {
+public interface ProjetService {
     Projet addProjet(Projet projet);
     Projet updateProjet(int id, ProjetDTO projet);
     Projet getProjet(int id);

@@ -4,17 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.gestionprojet.DTO.ProjetDTO;
 import project.gestionprojet.Entities.Projet;
-import project.gestionprojet.Repositories.ProjectRepo;
-import project.gestionprojet.Service.ProjectService;
+import project.gestionprojet.Repositories.ProjetRepo;
+import project.gestionprojet.Service.ProjetService;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 @Service
-public class ProjetServiceImpl implements ProjectService{
+public class ProjetServiceImpl implements ProjetService {
     @Autowired
-    private  ProjectRepo projectRepo;
+    private ProjetRepo projectRepo;
 
 
     @Override
@@ -76,6 +76,6 @@ public class ProjetServiceImpl implements ProjectService{
         if (projet == null) {
             throw new IllegalStateException("projet n'existe pas");
         }
-       return projectRepo.findByNomProjet(projetName);
+       return projet;
     }
 }

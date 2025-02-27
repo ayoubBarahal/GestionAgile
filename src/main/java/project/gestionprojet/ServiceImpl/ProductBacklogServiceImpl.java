@@ -1,6 +1,7 @@
 package project.gestionprojet.ServiceImpl;
 
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import project.gestionprojet.Service.ProductBacklogService;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class ProductBacklogServiceImpl implements ProductBacklogService {
 
     @Autowired
@@ -52,7 +54,7 @@ public class ProductBacklogServiceImpl implements ProductBacklogService {
 
     @Override
     public ProductBacklog deleteProductBacklog(int idProductBacklog) {
-        return productBacklogRepo.deleteByIdProductBacklog(idProductBacklog) ;
+        return productBacklogRepo.deleteById(idProductBacklog) ;
     }
 
 
