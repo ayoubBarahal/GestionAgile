@@ -10,4 +10,6 @@ public interface ProductBacklogRepo extends JpaRepository<ProductBacklog, Intege
     ProductBacklog save(ProductBacklog productBacklog);
     ProductBacklog findByNom(String nom);
     ProductBacklog deleteById(int id);
+
+    void findAllEpic();
 }

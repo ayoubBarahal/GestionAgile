@@ -22,8 +22,13 @@ public class ProductBacklogController {
     }
 
    @GetMapping("/api/findProductBacklog/{nom}")
-   public Optional<ProductBacklog> findProductBacklog(@PathVariable String nom) {
-        return productBacklogService.findProductBacklogByNom(nom) ;
+   public ProductBacklog findProductBacklog(@PathVariable String nom) {
+        ProductBacklog productBacklog = productBacklogService.findProductBacklogByNom(nom);
+        if (productBacklog==null) {
+            throw new IllegalStateException("le productBacklog n'existe pas");
+        }else{
+            return productBacklog;
+        }
    }
 
 

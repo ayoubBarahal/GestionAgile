@@ -1,6 +1,5 @@
 package project.gestionprojet.Entities;
 
-
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +19,9 @@ public class ProductBacklog {
 
     @OneToMany
     private List<Epic> epics ;
+
+    @OneToOne
+    private Projet projet ;
 
 
 
