@@ -7,6 +7,6 @@ import project.gestionprojet.Entities.Projet;
 import java.util.Optional;
 
 public interface ProjectRepo extends JpaRepository<Projet, Integer> {
-
+    Projet save(Projet projet);
     Projet findByNomProjet(String projetName);
 }

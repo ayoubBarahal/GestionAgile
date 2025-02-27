@@ -1,6 +1,4 @@
 package project.gestionprojet.Service;
-
-import org.springframework.stereotype.Service;
 import project.gestionprojet.DTO.ProjetDTO;
 import project.gestionprojet.Entities.Projet;
 

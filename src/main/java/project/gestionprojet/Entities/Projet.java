@@ -16,4 +16,8 @@ public class Projet {
 
     private String nomProjet;
 
+    public Projet(String nomProjet) {
+        this.nomProjet = nomProjet;
+    }
+
 }

@@ -13,20 +13,17 @@ import java.util.Optional;
 
 @Service
 public class ProjetServiceImpl implements ProjectService{
-
-    private static ProjectRepo projectRepo;
-
     @Autowired
-    public ProjetServiceImpl(ProjectRepo projectRepo) {
-        ProjetServiceImpl.projectRepo = projectRepo;
-    }
+    private  ProjectRepo projectRepo;
+
 
     @Override
     public Projet addProjet(Projet projet) {
-       try{ Optional<Projet> projetOptional = projectRepo.findById(projet.getIdProjet());
-        if (projetOptional.isPresent()) {
-            throw new IllegalStateException("projet existe deja");
-        }
+       try{
+        Optional<Projet> projetOptional = projectRepo.findById(projet.getIdProjet());
+            if (projetOptional.isPresent()) {
+                throw new IllegalStateException("projet existe deja");
+            }
        }catch (NullPointerException e) {
            e.printStackTrace();
        }

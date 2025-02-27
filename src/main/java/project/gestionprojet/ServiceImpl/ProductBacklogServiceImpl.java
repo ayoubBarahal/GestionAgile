@@ -14,12 +14,10 @@ import java.util.Optional;
 @Service
 public class ProductBacklogServiceImpl implements ProductBacklogService {
 
-
-    private static ProductBacklogRepo productBacklogRepo;
     @Autowired
-    public ProductBacklogServiceImpl(ProductBacklogRepo productBacklogRepo) {
-        ProductBacklogServiceImpl.productBacklogRepo = productBacklogRepo;
-    }
+    private ProductBacklogRepo productBacklogRepo;
+
+
 
     @Override
     public ProductBacklog addProductBacklog(ProductBacklog productBacklog) {
@@ -54,7 +52,7 @@ public class ProductBacklogServiceImpl implements ProductBacklogService {
 
     @Override
     public ProductBacklog deleteProductBacklog(int idProductBacklog) {
-        return productBacklogRepo.deleteById(idProductBacklog) ;
+        return productBacklogRepo.deleteByIdProductBacklog(idProductBacklog) ;
     }
 
 
