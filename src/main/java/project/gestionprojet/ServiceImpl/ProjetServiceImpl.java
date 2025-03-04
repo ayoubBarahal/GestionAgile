@@ -15,12 +15,14 @@ import java.util.Optional;
 @Service
 public class ProjetServiceImpl implements ProjectService {
 
-
     @Autowired
     private ProjetRepo projetRepo;
 
     @Override
-    public Projet addProjet(Projet projet) {
+    public Projet addProjet(ProjetDTO projetDTO) {
+        Projet projet = new Projet();
+        projet.setIdProjet(projetDTO.getIdProjet());
+        projet.setNomProjet(projetDTO.getNomProjet());
         return projetRepo.save(projet);
     }
 
@@ -58,8 +60,14 @@ public class ProjetServiceImpl implements ProjectService {
     }
 
     @Override
-    public Projet deleteProjet(int id) {
-        return null;
+    public void deleteProjet(int id) {
+        Optional<Projet> projetToDelete = projetRepo.findById(id);
+        if (projetToDelete.isPresent()) {
+             projetRepo.deleteById(id);
+        }
+        else {
+            throw new IllegalStateException("projet n'existe pas");
+        }
     }
 
     @Override
