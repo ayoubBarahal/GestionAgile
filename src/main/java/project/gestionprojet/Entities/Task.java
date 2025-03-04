@@ -18,7 +18,7 @@ public class Task {
     private String description ;
 
     @Enumerated(EnumType.STRING)
-    private Status status ;
+    private Status etat;
 
     @ManyToOne
     private UserStory userStory ;

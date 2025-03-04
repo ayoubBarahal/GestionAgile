@@ -22,10 +22,11 @@ public class Epic {
     @ManyToOne
     private ProductBacklog productBacklog;
 
-    @ManyToOne
-    private SprintBacklog sprintBacklogs;
-
     @OneToMany(mappedBy = "epic")
     private List<UserStory> userStories;
+
+    @OneToMany
+    private List<SprintBacklog> sprintBacklogs;
+
 
 }
