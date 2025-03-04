@@ -12,4 +12,5 @@ import lombok.Setter;
 public class ProjetDTO {
     private int idProjet;
     private String nomProjet;
+
 }

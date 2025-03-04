@@ -15,32 +15,37 @@ import java.util.Optional;
 public class ProductBacklogController {
 
     @Autowired
-    private ProductBacklogService pBService;
+    private ProductBacklogService productBacklogService;
 
     @PostMapping("/api/addProductBacklog")
-    public ResponseEntity<ProductBacklogDTO> addProductBacklog(@RequestBody ProductBacklogDTO productBacklog) {
-        ProductBacklogDTO productBacklogSaved = pBService.addProductBacklog(productBacklog);
+    public ResponseEntity<ProductBacklog> addProductBacklog(@RequestBody ProductBacklogDTO productBacklog) {
+        ProductBacklog productBacklogSaved = productBacklogService.addProductBacklog(productBacklog);
         return ResponseEntity.ok(productBacklogSaved);
     }
 
    @GetMapping("/api/findProductBacklog/{nom}")
-   public ResponseEntity<ProductBacklogDTO> findProductBacklog(@PathVariable String nom) {
-        ProductBacklogDTO productBacklog = pBService.findProductBacklogByNom(nom);
-        return ResponseEntity.ok(productBacklog);
+   public ResponseEntity<ProductBacklog> findProductBacklog(@PathVariable String nom) {
+        ProductBacklog productBacklog = productBacklogService.findProductBacklogByNom(nom);
+        if (productBacklog==null) {
+            throw new IllegalStateException("le productBacklog n'existe pas");
+        }else{
+            return ResponseEntity.ok(productBacklog);
+        }
    }
 
 
     @DeleteMapping("/api/deleteProductBacklog/{id}")
     public ResponseEntity<String> deleteProduct(@PathVariable int id) {
-        pBService.deleteProductBacklog(id);
-        return ResponseEntity.noContent().build();
+        if(productBacklogService.deleteProductBacklog(id)!=null) {
+            return ResponseEntity.ok("Product deleted successfully");
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @PutMapping("/api/updateProductBacklog/{id}")
-    public ResponseEntity<ProductBacklogDTO> updateBacklog(@PathVariable int id, @RequestBody ProductBacklogDTO productBacklog) {
-        ProductBacklogDTO updatedBacklog = pBService.updateProductBacklog(id, productBacklog);
+    public ResponseEntity<ProductBacklog> updateBacklog(@PathVariable int id, @RequestBody ProductBacklogDTO productBacklog) {
+        ProductBacklog updatedBacklog = productBacklogService.updateProductBacklog(id, productBacklog);
         return ResponseEntity.ok(updatedBacklog);
     }
-
 
 }
