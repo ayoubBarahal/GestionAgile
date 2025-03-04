@@ -5,6 +5,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import project.gestionprojet.DTO.ProductBacklogDTO;
 import project.gestionprojet.Entities.ProductBacklog;
 import project.gestionprojet.Repositories.ProductBacklogRepo;
 import project.gestionprojet.Service.ProductBacklogService;
@@ -22,7 +23,10 @@ public class ProductBacklogServiceImpl implements ProductBacklogService {
 
 
     @Override
-    public ProductBacklog addProductBacklog(ProductBacklog productBacklog) {
+    public ProductBacklog addProductBacklog(ProductBacklogDTO productBacklogdto) {
+        ProductBacklog productBacklog = new ProductBacklog();
+        productBacklog.setIdProductBacklog(productBacklogdto.getIdProductBacklog());
+        productBacklog.setNom(productBacklogdto.getNom());
         return productBacklogRepo.save(productBacklog);
     }
 
@@ -32,7 +36,7 @@ public class ProductBacklogServiceImpl implements ProductBacklogService {
     }
 
     @Override
-    public ProductBacklog updateProductBacklog(int id ,ProductBacklog productBacklog) {
+    public ProductBacklog updateProductBacklog(int id ,ProductBacklogDTO productBacklog) {
 
         Optional<ProductBacklog> existingBacklogOptional = productBacklogRepo.findById(id);
         ProductBacklog existingBacklog=null;

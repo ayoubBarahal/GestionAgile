@@ -8,9 +8,9 @@ import java.util.List;
 
 
 public interface ProductBacklogService {
-    ProductBacklogDTO addProductBacklog(ProductBacklogDTO productBacklogDTO) ;
-    ProductBacklogDTO findProductBacklogByNom(String nom) ;
-    void deleteProductBacklog(int idProductBacklog) ;
-    ProductBacklogDTO updateProductBacklog(int id ,ProductBacklogDTO productBacklogDTO) ;
+    ProductBacklog addProductBacklog(ProductBacklogDTO productBacklogDTO) ;
+    ProductBacklog findProductBacklogByNom(String nom) ;
+    ProductBacklog deleteProductBacklog(int idProductBacklog) ;
+    ProductBacklog updateProductBacklog(int id ,ProductBacklogDTO productBacklogDTO) ;
 
 }
