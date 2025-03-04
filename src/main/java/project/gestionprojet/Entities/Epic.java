@@ -25,8 +25,8 @@ public class Epic {
     @OneToMany(mappedBy = "epic")
     private List<UserStory> userStories;
 
-    @ManyToOne
-    private SprintBacklog sprintBacklog;
+    @OneToMany
+    private List<SprintBacklog> sprintBacklogs;
 
 
 }
