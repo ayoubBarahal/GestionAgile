@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.security.Principal;
 import java.util.List;
 
 @Entity
@@ -17,7 +18,10 @@ public class UserStory {
     private int idUserStory;
     private String titre;
     private String description;
-    private String priorite;
+
+    @Enumerated(EnumType.STRING)
+    private Priority priority;
+
     private String status;
 
     @ManyToOne

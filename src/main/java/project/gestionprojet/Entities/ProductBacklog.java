@@ -23,8 +23,6 @@ public class ProductBacklog {
     @OneToOne
     private Projet projet ;
 
-
-
     public ProductBacklog(String nom ){
         this.nom=nom ;
     }
