@@ -14,6 +14,6 @@ import project.gestionprojet.Entities.Projet;
 public class ProductBacklogDTO {
     private int idProductBacklog ;
     private String nom ;
-    private Projet projet ;
+    private ProjetDTO projet ;
 
 }
