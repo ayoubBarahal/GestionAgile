@@ -5,13 +5,11 @@ import project.gestionprojet.Entities.Projet;
 import java.util.List;
 
 
-public interface ProjetService {
-    Projet addProjet(Projet projet);
-    Projet updateProjet(int id, ProjetDTO projet);
-    Projet getProjet(int id);
-   List<Projet> getProjets();
-  Projet deleteProjet(int id);
-   Projet getProjetByName(String projetName);
-
-
+public interface ProjectService {
+    ProjetDTO addProjet(ProjetDTO projetDTO);
+    ProjetDTO updateProjet(int id, ProjetDTO projetDTO);
+    ProjetDTO getProjet(int id);
+   List<ProjetDTO> getProjets();
+   void deleteProjet(int id);
+   ProjetDTO getProjetByName(String projetName);
 }
