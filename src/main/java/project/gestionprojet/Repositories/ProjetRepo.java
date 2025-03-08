@@ -9,7 +9,5 @@ import java.util.List;
 
 @Repository
 public interface ProjetRepo extends JpaRepository<Projet, Integer> {
-    Projet save(Projet projet);
     Projet findByNomProjet(String nomProjet);
-    List<Projet> findAll();
 }

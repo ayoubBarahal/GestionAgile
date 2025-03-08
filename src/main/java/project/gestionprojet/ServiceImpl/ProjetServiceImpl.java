@@ -8,9 +8,11 @@ import project.gestionprojet.Entities.Projet;
 import project.gestionprojet.Repositories.ProjetRepo;
 import project.gestionprojet.Service.ProjectService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProjetServiceImpl implements ProjectService {
@@ -19,44 +21,56 @@ public class ProjetServiceImpl implements ProjectService {
     private ProjetRepo projetRepo;
 
     @Override
-    public Projet addProjet(ProjetDTO projetDTO) {
+    public ProjetDTO addProjet(ProjetDTO projetDTO) {
         Projet projet = new Projet();
         projet.setIdProjet(projetDTO.getIdProjet());
         projet.setNomProjet(projetDTO.getNomProjet());
-        return projetRepo.save(projet);
+        Projet projetSaved = projetRepo.save(projet);
+        if(projetSaved != null) {
+            return projetDTO;
+        }
+        else {
+            throw new IllegalStateException("Failed to add projet");
+        }
     }
 
     @Override
-    public Projet updateProjet(int id, ProjetDTO projet) {
-        boolean exist = projetRepo.existsById(projet.getIdProjet());
-        if (!exist) {
-            throw new IllegalStateException("projet n'existe pas");
-        }
-        else {
+    public ProjetDTO updateProjet(int id, ProjetDTO projet) {
+
             Optional<Projet> projetToUpdate = projetRepo.findById(id);
             if (projetToUpdate.isPresent()) {
                 if(!Objects.equals(projet.getNomProjet(), projetToUpdate.get().getNomProjet())) {
                     projetToUpdate.get().setNomProjet(projet.getNomProjet());
                 }
             }
-            System.out.println("ach katkhawar a khay younesse");
             assert projetToUpdate.isPresent() :new IllegalStateException("projet n'est pas mis a jour correctement");
-            return projetRepo.save(projetToUpdate.get());
-        }
+            Projet projetSaved = projetRepo.save(projetToUpdate.get());
+            return new ProjetDTO(projetSaved.getIdProjet(), projetSaved.getNomProjet()) ;
+
     }
 
     @Override
-    public Projet getProjet(int id) {
+    public ProjetDTO getProjet(int id) {
         Optional<Projet> projetOptional = projetRepo.findById(id);
         if (projetOptional.isEmpty()) {
             throw new IllegalStateException("le projet n'existe pas");
         }
-        return projetOptional.get();
+        ProjetDTO projetDTO = new ProjetDTO(projetOptional.get().getIdProjet(), projetOptional.get().getNomProjet());
+        return projetDTO;
     }
 
     @Override
-    public List<Projet> getProjets() {
-        return projetRepo.findAll();
+    public List<ProjetDTO> getProjets() {
+        List<Projet> projets = projetRepo.findAll();
+        List<ProjetDTO> projetDTOs = new ArrayList<>();
+
+        for (Projet projet : projets) {
+            ProjetDTO projetDTO = new ProjetDTO();
+            projetDTO.setIdProjet(projet.getIdProjet());
+            projetDTO.setNomProjet(projet.getNomProjet());
+            projetDTOs.add(projetDTO);
+        }
+        return projetDTOs;
     }
 
     @Override
@@ -71,12 +85,12 @@ public class ProjetServiceImpl implements ProjectService {
     }
 
     @Override
-    public Projet getProjetByName(String projetName) {
+    public ProjetDTO getProjetByName(String projetName) {
         Projet projet = projetRepo.findByNomProjet(projetName);
         if (projet == null) {
             throw new IllegalStateException("projet n'existe pas");
         }
-        return projet;
+        return new ProjetDTO(projet.getIdProjet(), projet.getNomProjet());
     }
 
 }

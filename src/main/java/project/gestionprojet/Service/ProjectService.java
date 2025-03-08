@@ -6,10 +6,10 @@ import java.util.List;
 
 
 public interface ProjectService {
-    Projet addProjet(ProjetDTO projetDTO);
-    Projet updateProjet(int id, ProjetDTO projetDTO);
-    Projet getProjet(int id);
-   List<Projet> getProjets();
+    ProjetDTO addProjet(ProjetDTO projetDTO);
+    ProjetDTO updateProjet(int id, ProjetDTO projetDTO);
+    ProjetDTO getProjet(int id);
+   List<ProjetDTO> getProjets();
    void deleteProjet(int id);
-   Projet getProjetByName(String projetName);
+   ProjetDTO getProjetByName(String projetName);
 }

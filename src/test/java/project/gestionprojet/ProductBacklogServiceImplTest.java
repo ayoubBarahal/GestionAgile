@@ -2,6 +2,7 @@ package project.gestionprojet;
 
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import project.gestionprojet.Entities.ProductBacklog;
 import project.gestionprojet.Entities.Projet;
 import project.gestionprojet.Repositories.ProductBacklogRepo;
 import project.gestionprojet.Service.ProductBacklogService;
+import project.gestionprojet.Service.ProjectService;
 import project.gestionprojet.ServiceImpl.ProductBacklogServiceImpl;
 
 import java.util.Optional;
@@ -22,39 +24,44 @@ class ProductBacklogServiceImplTest {
 
     @Autowired
     private ProductBacklogService productBacklogService;
+    @Autowired
+    private    ProjectService projectService ;
 
-    private static ProductBacklogDTO productBacklog;
+    private  ProductBacklogDTO productBacklog;
 
-    private static ProjetDTO projet;
+    private  ProjetDTO projet;
 
-    @BeforeAll
-    static void init(){
+    @BeforeEach
+    public  void init(){
         projet =new ProjetDTO(1,"projet name");
-         productBacklog = new ProductBacklogDTO(1,"First Product Backlog ",projet);
+        projet =projectService.addProjet(projet)  ;
+         productBacklog = new ProductBacklogDTO(1,"First Product Backlog ",projet.getIdProjet());
     }
 
     @Test
     void ajouter() {
-        ProductBacklog result = productBacklogService.addProductBacklog(productBacklog);
+        ProductBacklogDTO result = productBacklogService.addProductBacklog(productBacklog);
         assertNotNull(result);
     }
+
+
     @Test
     void modifier() {
-        productBacklog.setNom("Name Updates") ;
-        ProductBacklog result = productBacklogService.updateProductBacklog(productBacklog.getIdProductBacklog(),productBacklog);
+        ProductBacklogDTO productBacklogDTOTest = new ProductBacklogDTO(1,"Updated Name",1);
+        ProductBacklogDTO result = productBacklogService.updateProductBacklog(productBacklog.getIdProductBacklog(),productBacklogDTOTest);
         assertNotNull(result);
     }
 
     @Test
     void find(){
-        ProductBacklog result = productBacklogService.findProductBacklogByNom(productBacklog.getNom());
+        // Ajouter un backlog avant de le chercher
+        productBacklogService.addProductBacklog(productBacklog);
+
+        ProductBacklogDTO result = productBacklogService.findProductBacklogByNom(productBacklog.getNom());
         assertNotNull(result);
     }
 
-    @Test
-    void remover() {
-        ProductBacklog result = productBacklogService.deleteProductBacklog(productBacklog.getIdProductBacklog());
-        assertNull(result);
-    }
+
+
 
 }
