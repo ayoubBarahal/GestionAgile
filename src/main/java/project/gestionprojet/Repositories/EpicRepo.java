@@ -7,5 +7,5 @@ import project.gestionprojet.Entities.ProductBacklog;
 import java.util.List;
 
 public interface EpicRepo extends JpaRepository<Epic, Integer> {
-    List<Epic> findAllByProductBacklog(ProductBacklog productBacklog);
+    List<Epic> findEpicsByProductBacklog(ProductBacklog productBacklog);
 }
