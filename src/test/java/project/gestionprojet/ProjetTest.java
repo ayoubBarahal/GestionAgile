@@ -16,10 +16,10 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class ProjetTest {
     @Autowired
     private ProjetServiceImpl projetService;
-    private static Projet projet;
+    private static ProjetDTO projet;
     @BeforeAll
     public static void init() {
-        projet=new Projet("gestion agile");
+        projet=new ProjetDTO(1,"gestion agile");
     }
     @Test
     public void ajouter() {

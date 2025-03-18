@@ -62,7 +62,7 @@ public class EpicServiceImpl implements EpicService {
 
     @Override
     public List<EpicDTO> findAllEpicByProductBacklog(int intProductBacklog) {
-        List<Epic> epicDTOs = epicRepo.findEpicsByProductBacklog(productBacklogRepo.findById(intProductBacklog));
+        List<Epic> epicDTOs = epicRepo.findAllByProductBacklog(productBacklogRepo.findById(intProductBacklog));
 
         return convertToListDto(epicDTOs);
     }
