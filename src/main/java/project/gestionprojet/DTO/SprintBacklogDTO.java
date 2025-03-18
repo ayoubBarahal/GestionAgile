@@ -7,9 +7,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class ProjetDTO {
-    private int idProjet;
-    private String nomProjet;
+@NoArgsConstructor
+public class SprintBacklogDTO {
+
+    private int idSprintBacklog ;
+    private String nom;
+    private String description ;
+
 }

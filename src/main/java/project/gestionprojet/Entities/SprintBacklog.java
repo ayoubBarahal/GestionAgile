@@ -17,13 +17,12 @@ public class SprintBacklog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idSprintBacklog ;
     private String nom ;
-
+    private String description ;
 
     @OneToMany
     private List<Epic> epics ;
 
-    public SprintBacklog(String nom) {
-        this.nom = nom;
-    }
+    @OneToMany
+    private List<Sprint> sprints ;
 
 }

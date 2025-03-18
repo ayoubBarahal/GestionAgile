@@ -18,15 +18,23 @@ public class UserStory {
     private int idUserStory;
     private String titre;
     private String description;
+    private String desire ;
+    private String goal;
+    private String role ;
 
     @Enumerated(EnumType.STRING)
     private Priority priority;
 
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     @ManyToOne
     private Epic epic;
+
     @OneToMany
     private List<Task> tasks ;
+
+
+
 
 }

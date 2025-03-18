@@ -17,11 +17,12 @@ public class ProductBacklog {
     private int idProductBacklog ;
     private String nom ;
 
+    @OneToOne
+    private Projet projet ;
+
     @OneToMany
     private List<Epic> epics ;
 
-    @OneToOne
-    private Projet projet ;
 
     public ProductBacklog(String nom ){
         this.nom=nom ;
