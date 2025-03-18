@@ -19,5 +19,7 @@ public class Projet {
     private String nomProjet;
 
 
-
+    public Projet(String gestionAgile) {
+        this.nomProjet = gestionAgile;
+    }
 }
