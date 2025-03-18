@@ -1,6 +1,5 @@
 package project.gestionprojet.ServiceImpl;
 
-
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,17 +39,17 @@ public class EpicServiceImpl implements EpicService {
     @Override
     public EpicDTO updateEpic(int id, EpicDTO ep) {
 
-        Optional<Epic> epic = epicRepo.findById(id);
-        if (epic.isPresent()) {
-            Epic epicToUpdate = epic.get();
-            epicToUpdate.setTitre(ep.getTitre());
-            epicToUpdate.setDescription(ep.getDescription());
-            epicToUpdate.setProductBacklog(productBacklogRepo.findById(ep.getIdEpic()));
-            epicRepo.save(epicToUpdate);
-            ep.setIdEpic(id);
-            return ep;
-        }
-        throw new EntityNotFoundException("Epic not found");
+            Optional<Epic> epic = epicRepo.findById(id);
+            if (epic.isPresent()) {
+                Epic epicToUpdate = epic.get();
+                epicToUpdate.setTitre(ep.getTitre());
+                epicToUpdate.setDescription(ep.getDescription());
+                epicToUpdate.setProductBacklog(productBacklogRepo.findById(ep.getIdEpic()));
+                epicRepo.save(epicToUpdate);
+                ep.setIdEpic(id);
+                return ep;
+            }
+            throw new EntityNotFoundException("Epic not found");
     }
 
     @Override
@@ -65,7 +64,7 @@ public class EpicServiceImpl implements EpicService {
 
     @Override
     public List<EpicDTO> findAllEpicByProductBacklog(int intProductBacklog) {
-        List<Epic> epicDTOs = epicRepo.findAllByProductBacklog(productBacklogRepo.findById(intProductBacklog));
+        List<Epic> epicDTOs = epicRepo.findEpicsByProductBacklog(productBacklogRepo.findById(intProductBacklog));
 
         return convertToListDto(epicDTOs);
     }

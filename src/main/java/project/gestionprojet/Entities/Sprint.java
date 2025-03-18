@@ -9,20 +9,19 @@ import lombok.Setter;
 import java.util.Date;
 
 @Entity
-@Getter
 @Setter
-@AllArgsConstructor
+@Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Sprint {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idSprint ;
-    private String nomSprint ;
-    private Date dateDebut ;
-    private Date dateFin ;
+    private int idSprint;
+    private String nomSprint;
+    private Date dateDebut;
+    private Date dateFin;
 
     @ManyToOne
-    private SprintBacklog sprintBacklog ;
+    private SprintBacklog sprintBacklog;
 
 }

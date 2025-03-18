@@ -1,6 +1,7 @@
 package project.gestionprojet.Entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class ProductBacklog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,10 +25,6 @@ public class ProductBacklog {
     @OneToMany
     private List<Epic> epics ;
 
-
-    public ProductBacklog(String nom ){
-        this.nom=nom ;
-    }
 
 
 }

@@ -1,14 +1,15 @@
 package project.gestionprojet.Service;
 
 import project.gestionprojet.DTO.EpicDTO;
-import project.gestionprojet.Entities.Epic;
+import project.gestionprojet.DTO.ProductBacklogDTO;
 
 import java.util.List;
 
 public interface EpicService {
-    EpicDTO createEpic(EpicDTO epic);
-    EpicDTO updateEpic(int idEpic , EpicDTO epic);
-    void deleteEpic(int idEpic);
-    List<EpicDTO> getAllEpics();
+    EpicDTO createEpic(EpicDTO ep);
+    EpicDTO updateEpic(int id,EpicDTO ep);
+    void deleteEpic(int id);
     List<EpicDTO> findAllEpicByProductBacklog(int idProductBacklog);
+    List<EpicDTO> getAllEpics();
+
 }
