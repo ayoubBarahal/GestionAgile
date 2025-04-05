@@ -19,10 +19,10 @@ public class ProductBacklog {
     private int idProductBacklog ;
     private String nom ;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Projet projet ;
 
-    @OneToMany
+    @OneToMany(mappedBy = "productBacklog")
     private List<Epic> epics ;
 
 

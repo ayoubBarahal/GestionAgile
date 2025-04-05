@@ -36,8 +36,7 @@ public class JwtTokenProvider {
 
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
-
-        return Jwts.builder()
+        String tokken = Jwts.builder()
                 .setSubject(userPrincipal.getUsername())
                 .claim("role", userPrincipal.getAuthorities().stream()
                         .map(GrantedAuthority::getAuthority)
@@ -47,6 +46,8 @@ public class JwtTokenProvider {
                 .setExpiration(expiryDate)
                 .signWith(Keys.hmacShaKeyFor(jwtSecret.getBytes()), SignatureAlgorithm.HS512)
                 .compact();
+        System.out.println("Token : " + tokken );
+        return tokken;
     }
 
 
