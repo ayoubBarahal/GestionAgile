@@ -59,7 +59,7 @@ public class EpicServiceImplTest {
     @Test
     void testCreateEpic() {
         // Arrange
-        when(productBacklogRepo.findById(anyInt())).thenReturn(productBacklog);
+        when(productBacklogRepo.findById(anyInt())).thenReturn(Optional.ofNullable(productBacklog));
         when(epicRepo.save(any(Epic.class))).thenReturn(epic);
 
         // Act
@@ -87,7 +87,7 @@ public class EpicServiceImplTest {
     void testUpdateEpic() {
         // Arrange
         when(epicRepo.findById(anyInt())).thenReturn(Optional.of(epic));
-        when(productBacklogRepo.findById(anyInt())).thenReturn(productBacklog);
+        when(productBacklogRepo.findById(anyInt())).thenReturn(Optional.ofNullable(productBacklog));
         when(epicRepo.save(any(Epic.class))).thenReturn(epic);
 
         // Act
@@ -136,7 +136,7 @@ public class EpicServiceImplTest {
     void testFindAllEpicByProductBacklog() {
         // Arrange
         List<Epic> epicList = Arrays.asList(epic);
-        when(productBacklogRepo.findById(anyInt())).thenReturn(productBacklog);
+        when(productBacklogRepo.findById(anyInt())).thenReturn(Optional.ofNullable(productBacklog));
         when(epicRepo.findAllByProductBacklog(any(ProductBacklog.class))).thenReturn(epicList);
 
         // Act

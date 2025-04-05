@@ -55,7 +55,7 @@ class EpicServiceTest {
 
     @Test
     void testCreateEpic() {
-        when(productBacklogRepo.findById(1)).thenReturn(productBacklog);
+        when(productBacklogRepo.findById(1)).thenReturn(Optional.ofNullable(productBacklog));
         when(epicRepo.save(any(Epic.class))).thenReturn(epic);
 
         EpicDTO result = epicService.createEpic(epicDTO);
@@ -68,7 +68,7 @@ class EpicServiceTest {
     @Test
     void testUpdateEpic() {
         when(epicRepo.findById(1)).thenReturn(Optional.of(epic));
-        when(productBacklogRepo.findById(1)).thenReturn(productBacklog);
+        when(productBacklogRepo.findById(1)).thenReturn(Optional.ofNullable(productBacklog));
         when(epicRepo.save(any(Epic.class))).thenReturn(epic);
 
         EpicDTO result = epicService.updateEpic(1, epicDTO);
