@@ -26,7 +26,7 @@ public class EpicServiceImpl implements EpicService {
             throw new EntityNotFoundException("Epic is null");
         }
         Epic epic = new Epic();
-        epic.setProductBacklog(productBacklogRepo.findByIdProductBacklog(ep.getIdProductBacklog()));
+        epic.setProductBacklog(productBacklogRepo.findById(ep.getIdProductBacklog()));
         epic.setTitre(ep.getTitre());
         epic.setDescription(ep.getDescription());
         Epic epicSaved=epicRepo.save(epic);
@@ -42,7 +42,7 @@ public class EpicServiceImpl implements EpicService {
                 Epic epicToUpdate = epic.get();
                 epicToUpdate.setTitre(ep.getTitre());
                 epicToUpdate.setDescription(ep.getDescription());
-                epicToUpdate.setProductBacklog(productBacklogRepo.findByIdProductBacklog(ep.getIdEpic()));
+                epicToUpdate.setProductBacklog(productBacklogRepo.findById(ep.getIdEpic()));
                 epicRepo.save(epicToUpdate);
                 ep.setIdEpic(id);
                 return ep;
@@ -62,7 +62,7 @@ public class EpicServiceImpl implements EpicService {
 
     @Override
     public List<EpicDTO> findAllEpicByProductBacklog(int intProductBacklog) {
-        List<Epic> epicDTOs = epicRepo.findAllByProductBacklog(productBacklogRepo.findByIdProductBacklog(intProductBacklog));
+        List<Epic> epicDTOs = epicRepo.findAllByProductBacklog(productBacklogRepo.findById(intProductBacklog));
 
         return convertToListDto(epicDTOs);
     }

@@ -14,4 +14,5 @@ public interface ProductBacklogRepo extends JpaRepository<ProductBacklog, Intege
     ProductBacklog findByNom(@Param("nom") String nom);
     ProductBacklog findById(int id);
 
+    // findByIdProductBacklog(int intProductBacklog);
 }

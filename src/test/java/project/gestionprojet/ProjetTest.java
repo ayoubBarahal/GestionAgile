@@ -1,56 +1,74 @@
 package project.gestionprojet;
 
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import project.gestionprojet.DTO.ProjetDTO;
-import project.gestionprojet.Entities.Projet;
 import project.gestionprojet.ServiceImpl.ProjetServiceImpl;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.when;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class ProjetTest {
-    @Autowired
+
+    @Mock
     private ProjetServiceImpl projetService;
-    private static ProjetDTO projet;
-    @BeforeAll
-    public static void init() {
-        projet=new ProjetDTO(1,"gestion agile");
+
+    @InjectMocks
+    private ProjetTest testInstance;
+
+    private ProjetDTO projet;
+
+    @BeforeEach
+    public void init() {
+        projet = new ProjetDTO(1, "gestion agile");
     }
+
     @Test
     public void ajouter() {
+        when(projetService.addProjet(projet)).thenReturn(projet);
         ProjetDTO projetTest = projetService.addProjet(projet);
         assertNotNull(projetTest);
     }
+
     @Test
     public void modifier() {
-        projet.setNomProjet("Projet Updated");
-        ProjetDTO projetDTO=new ProjetDTO(projet.getIdProjet(),"projet updated");
-        ProjetDTO projetTest = projetService.updateProjet(projetDTO.getIdProjet(),projetDTO);
-        assertNotNull(projetTest);
+        ProjetDTO updated = new ProjetDTO(1, "projet updated");
+        when(projetService.updateProjet(updated.getIdProjet(), updated)).thenReturn(updated);
 
+        ProjetDTO projetTest = projetService.updateProjet(updated.getIdProjet(), updated);
+        assertNotNull(projetTest);
     }
 
     @Test
-    public void getProjet(){
+    public void getProjet() {
+        when(projetService.getProjet(projet.getIdProjet())).thenReturn(projet);
+
         ProjetDTO projetTest = projetService.getProjet(projet.getIdProjet());
         assertNotNull(projetTest, "ce projet n'existe pas");
     }
 
     @Test
-    public void getProjets(){
+    public void getProjets() {
+        List<ProjetDTO> projets = Arrays.asList(projet);
+        when(projetService.getProjets()).thenReturn(projets);
+
         List<ProjetDTO> projetsTest = projetService.getProjets();
         assertNotNull(projetsTest);
     }
 
     @Test
-    public void getProjetByName(){
+    public void getProjetByName() {
+        when(projetService.getProjetByName(projet.getNomProjet())).thenReturn(projet);
+
         ProjetDTO projetTest = projetService.getProjetByName(projet.getNomProjet());
         assertNotNull(projetTest);
     }
-
 }

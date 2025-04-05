@@ -55,8 +55,7 @@ public class ProjetServiceImpl implements ProjectService {
         if (projetOptional.isEmpty()) {
             throw new IllegalStateException("le projet n'existe pas");
         }
-        ProjetDTO projetDTO = new ProjetDTO(projetOptional.get().getIdProjet(), projetOptional.get().getNomProjet());
-        return projetDTO;
+        return new ProjetDTO(projetOptional.get().getIdProjet(), projetOptional.get().getNomProjet());
     }
 
     @Override

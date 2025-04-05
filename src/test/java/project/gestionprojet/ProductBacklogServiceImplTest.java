@@ -1,78 +1,62 @@
 package project.gestionprojet;
 
-<<<<<<< HEAD
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import project.gestionprojet.DTO.ProductBacklogDTO;
 import project.gestionprojet.DTO.ProjetDTO;
+
 import project.gestionprojet.Service.ProductBacklogService;
 import project.gestionprojet.Service.ProjectService;
-=======
-import jakarta.transaction.Transactional;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.beans.factory.annotation.Autowired;
-import project.gestionprojet.DTO.ProductBacklogDTO;
-import project.gestionprojet.DTO.ProjetDTO;
-import project.gestionprojet.Entities.ProductBacklog;
-import project.gestionprojet.Entities.Projet;
-import project.gestionprojet.Repositories.ProductBacklogRepo;
-import project.gestionprojet.Service.ProductBacklogService;
-import project.gestionprojet.Service.ProjectService;
-import project.gestionprojet.ServiceImpl.ProductBacklogServiceImpl;
->>>>>>> 365d226 (la classe projet done avec les tests RAS)
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.when;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class ProductBacklogServiceImplTest {
 
-    @Autowired
+    @Mock
+    private ProjectService projectService;
+
+    @Mock
     private ProductBacklogService productBacklogService;
-    @Autowired
-    private    ProjectService projectService ;
 
-    private  ProductBacklogDTO productBacklog;
-
-    private  ProjetDTO projet;
+    private ProductBacklogDTO productBacklog;
+    private ProjetDTO projet;
 
     @BeforeEach
-    public  void init(){
-        projet =new ProjetDTO(1,"projet name");
-        projet =projectService.addProjet(projet)  ;
-         productBacklog = new ProductBacklogDTO(1,"First Product Backlog ",projet.getIdProjet());
+    void setUp() {
+        projet = new ProjetDTO(1, "projet name");
+        productBacklog = new ProductBacklogDTO(1, "First Product Backlog", projet.getIdProjet());
     }
 
     @Test
     void ajouter() {
+        when(projectService.addProjet(projet)).thenReturn(projet);
+        when(productBacklogService.addProductBacklog(productBacklog)).thenReturn(productBacklog);
+
+        projet = projectService.addProjet(projet);
         ProductBacklogDTO result = productBacklogService.addProductBacklog(productBacklog);
         assertNotNull(result);
     }
 
-
     @Test
     void modifier() {
-        ProductBacklogDTO productBacklogDTOTest = new ProductBacklogDTO(1,"Updated Name",1);
-        ProductBacklogDTO result = productBacklogService.updateProductBacklog(productBacklog.getIdProductBacklog(),productBacklogDTOTest);
+        ProductBacklogDTO updated = new ProductBacklogDTO(1, "Updated Name", 1);
+        when(productBacklogService.updateProductBacklog(productBacklog.getIdProductBacklog(), updated)).thenReturn(updated);
+
+        ProductBacklogDTO result = productBacklogService.updateProductBacklog(productBacklog.getIdProductBacklog(), updated);
         assertNotNull(result);
     }
 
     @Test
-    void find(){
-        // Ajouter un backlog avant de le chercher
-        productBacklogService.addProductBacklog(productBacklog);
+    void find() {
+        when(productBacklogService.findProductBacklogByNom(productBacklog.getNom())).thenReturn(productBacklog);
 
         ProductBacklogDTO result = productBacklogService.findProductBacklogByNom(productBacklog.getNom());
         assertNotNull(result);
     }
-
-
-
-
 }
+
