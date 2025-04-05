@@ -11,42 +11,43 @@ import project.gestionprojet.Service.TaskService;
 import java.util.List;
 
 @Controller
+@RequestMapping("/api/task")
 public class TaskController {
 
     @Autowired
     private TaskService taskService;
 
-    @PostMapping("/api/addTask")
+    @PostMapping("/addTask")
     public ResponseEntity<TaskDTO> addTask(@RequestBody TaskDTO taskDTO) {
         TaskDTO task = taskService.createTask(taskDTO);
         return ResponseEntity.ok().body(task);
     }
 
-    @PutMapping("/api/updateTask/{id}")
+    @PutMapping("/updateTask/{id}")
     public ResponseEntity<TaskDTO> updateTask(@PathVariable(name = "id") int idTask , @RequestBody TaskDTO taskDTO) {
         TaskDTO task = taskService.updateTask(idTask, taskDTO);
         return ResponseEntity.ok().body(task);
     }
 
-    @DeleteMapping("/api/deleteTask/{id}")
+    @DeleteMapping("/deleteTask/{id}")
     public ResponseEntity<String> deleteTask(@PathVariable(name = "id") int idTask) {
             taskService.deleteTask(idTask);
             return ResponseEntity.ok("Task " + idTask + " deleted successfully!");
     }
 
-    @GetMapping("/api/AllTasksByUserStory/{idTask}")
+    @GetMapping("/AllTasksByUserStory/{idTask}")
     public ResponseEntity<List<TaskDTO>> getAllTasksByUserStory(@PathVariable int idTask) {
         List<TaskDTO> tasks = taskService.getAllTasksByUserStory(idTask);
         return ResponseEntity.ok().body(tasks);
     }
 
-    @GetMapping("/api/getStatus/{id}")
+    @GetMapping("/getStatus/{id}")
     public ResponseEntity<Status> getTaskStatus(@PathVariable(name = "id") int idTask) {
         Status status = taskService.getStatus(idTask);
         return ResponseEntity.ok().body(status);
     }
 
-    @PutMapping("/api/updateStatus/{id}")
+    @PutMapping("/updateStatus/{id}")
     public ResponseEntity<Status> updateStatus(@PathVariable(name = "id") int idTask , @RequestBody Status newStatus) {
         Status status = taskService.updateStatus(idTask, newStatus);
         return ResponseEntity.ok().body(status);

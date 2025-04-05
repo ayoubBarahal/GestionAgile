@@ -1,0 +1,14 @@
+[POST] http://localhost:8080/api/addProductBacklog - Add Product Backlog: ProductBacklogServiceImpl.addProductBacklog(..) in 32ms with result: project.gestionprojet.DTO.ProductBacklogDTO@5b9309d9
+[GET] http://localhost:8080/api/findProductBacklog/first%20Product%20Backlog - Find Product Backlog By Nom: ProductBacklogServiceImpl.findProductBacklogByNom(..) in 50ms with result: project.gestionprojet.DTO.ProductBacklogDTO@73f10a68
+[GET] http://localhost:8080/api/findProductBacklog/first%20Product%20Backlog - Find Product Backlog By Nom: ProductBacklogServiceImpl.findProductBacklogByNom(..) in 6ms with result: project.gestionprojet.DTO.ProductBacklogDTO@48bdf4e
+[POST] http://localhost:8080/api/addProductBacklog - Add Product Backlog: ProductBacklogServiceImpl.addProductBacklog(..) in 7ms with result: project.gestionprojet.DTO.ProductBacklogDTO@7ae4ed22
+[POST] http://localhost:8080/api/addProductBacklog - Add Product Backlog: ProductBacklogServiceImpl.addProductBacklog(..) in 8ms with result: project.gestionprojet.DTO.ProductBacklogDTO@74cb7ad2
+[] http://localhost - Add Product Backlog: ProductBacklogServiceImpl.addProductBacklog(..) in 22ms with result: project.gestionprojet.DTO.ProductBacklogDTO@35014251
+[] http://localhost - Update Product Backlog: ProductBacklogServiceImpl.updateProductBacklog(..) in 7ms with result: project.gestionprojet.DTO.ProductBacklogDTO@21b298de
+[] http://localhost - Add Product Backlog: ProductBacklogServiceImpl.addProductBacklog(..) in 5ms with result: project.gestionprojet.DTO.ProductBacklogDTO@61f56074
+[] http://localhost - Find Product Backlog By Nom: ProductBacklogServiceImpl.findProductBacklogByNom(..) in 57ms with result: project.gestionprojet.DTO.ProductBacklogDTO@36c222ef
+[POST] http://localhost:8080/api/backlog/addProductBacklog - Add Product Backlog: ProductBacklogServiceImpl.addProductBacklog(..) in 57ms with result: project.gestionprojet.DTO.ProductBacklogDTO@5321f562
+[] http://localhost - Add Product Backlog: ProductBacklogServiceImpl.addProductBacklog(..) in 32ms with result: project.gestionprojet.DTO.ProductBacklogDTO@58968733
+[] http://localhost - Update Product Backlog: ProductBacklogServiceImpl.updateProductBacklog(..) in 0ms with result: project.gestionprojet.DTO.ProductBacklogDTO@3e64cf62
+[] http://localhost - Add Product Backlog: ProductBacklogServiceImpl.addProductBacklog(..) in 0ms with result: project.gestionprojet.DTO.ProductBacklogDTO@60c95d8
+[] http://localhost - Find Product Backlog By Nom: ProductBacklogServiceImpl.findProductBacklogByNom(..) in 90ms with result: project.gestionprojet.DTO.ProductBacklogDTO@4cc40892

@@ -37,9 +37,9 @@ public class UserStoryServiceImpl implements UserStoryService {
         userStoryDTO.setPriority(userStory.getPriority());
         userStoryDTO.setStatus(userStory.getStatus());
 
-        if (userStory.getEpic() != null) {
-            userStoryDTO.setIdEpic(userStory.getEpic().getIdEpic());
-        }
+//        if (userStory.getEpic() != null) {
+//            userStoryDTO.setIdEpic(userStory.getEpic().getIdEpic());
+//        }
 
         return userStoryDTO;
     }
@@ -64,15 +64,11 @@ public class UserStoryServiceImpl implements UserStoryService {
     public UserStoryDTO createUserStory(UserStoryDTO userStoryDTO) {
         UserStory userStory = convertToUserStory(userStoryDTO);
 
-        // Récupérer et associer l'Epic si un ID est fourni
-        if (userStoryDTO.getIdEpic() > 0) {
             Epic epic = epicRepo.findById(userStoryDTO.getIdEpic()).orElse(null);
-            if (epic != null) {
-                userStory.setEpic(epic);
-            }
-        }
+            userStory.setEpic(epic);
 
         UserStory savedUserStory = userStoryRepo.save(userStory);
+
         return convertToUserStoryDTO(savedUserStory);
     }
 

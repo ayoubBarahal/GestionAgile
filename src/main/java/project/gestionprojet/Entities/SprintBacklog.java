@@ -16,6 +16,7 @@ public class SprintBacklog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idSprintBacklog ;
+
     private String nom ;
     private String description ;
 
@@ -24,5 +25,10 @@ public class SprintBacklog {
 
     @OneToMany(mappedBy = "sprintBacklog")
     private List<Epic> epics;
+
+    public SprintBacklog(String nom, String description) {
+        this.nom = nom;
+        this.description = description;
+    }
 
 }

@@ -1,21 +1,15 @@
 package project.gestionprojet;
 
-import jakarta.transaction.Transactional;
-import org.junit.jupiter.api.BeforeAll;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import project.gestionprojet.DTO.ProductBacklogDTO;
 import project.gestionprojet.DTO.ProjetDTO;
-import project.gestionprojet.Entities.ProductBacklog;
-import project.gestionprojet.Entities.Projet;
-import project.gestionprojet.Repositories.ProductBacklogRepo;
 import project.gestionprojet.Service.ProductBacklogService;
 import project.gestionprojet.Service.ProjectService;
-import project.gestionprojet.ServiceImpl.ProductBacklogServiceImpl;
 
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
