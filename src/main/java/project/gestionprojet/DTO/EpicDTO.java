@@ -22,4 +22,5 @@ public class EpicDTO {
         this.idProductBacklog = idProductBacklog;
         this.idSprintBacklog = idSprintBacklog;
     }
+
 }
