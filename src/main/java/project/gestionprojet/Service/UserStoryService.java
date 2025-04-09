@@ -5,7 +5,7 @@ import project.gestionprojet.Entities.UserStory;
 
 public interface UserStoryService {
     UserStoryDTO createUserStory(UserStoryDTO userStoryDTO);
-    UserStoryDTO updateUserStory(UserStoryDTO userStoryDTO);
+    UserStoryDTO updateUserStory(int id, UserStoryDTO userStoryDTO);
     UserStoryDTO deleteUserStory(UserStoryDTO userStoryDTO);
     UserStoryDTO getUserStoryById(int id);
     UserStoryDTO getUserStoryByUserName(String userName);

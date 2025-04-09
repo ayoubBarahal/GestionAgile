@@ -12,3 +12,31 @@
 [] http://localhost - Update Product Backlog: ProductBacklogServiceImpl.updateProductBacklog(..) in 0ms with result: project.gestionprojet.DTO.ProductBacklogDTO@3e64cf62
 [] http://localhost - Add Product Backlog: ProductBacklogServiceImpl.addProductBacklog(..) in 0ms with result: project.gestionprojet.DTO.ProductBacklogDTO@60c95d8
 [] http://localhost - Find Product Backlog By Nom: ProductBacklogServiceImpl.findProductBacklogByNom(..) in 90ms with result: project.gestionprojet.DTO.ProductBacklogDTO@4cc40892
+[] http://localhost - Add Product Backlog: ProductBacklogServiceImpl.addProductBacklog(..) in 14ms with result: project.gestionprojet.DTO.ProductBacklogDTO@57e6fd09
+[] http://localhost - Update Product Backlog: ProductBacklogServiceImpl.updateProductBacklog(..) in 7ms with result: project.gestionprojet.DTO.ProductBacklogDTO@1bbe7fcb
+[] http://localhost - Add Product Backlog: ProductBacklogServiceImpl.addProductBacklog(..) in 14ms with result: project.gestionprojet.DTO.ProductBacklogDTO@2907f58d
+[] http://localhost - Find Product Backlog By Nom: ProductBacklogServiceImpl.findProductBacklogByNom(..) in 89ms with result: project.gestionprojet.DTO.ProductBacklogDTO@4a716a73
+[POST] http://localhost:8080/api/backlog/addProductBacklog - Add Product Backlog: ProductBacklogServiceImpl.addProductBacklog(..) in 21ms with result: project.gestionprojet.DTO.ProductBacklogDTO@64bb0724
+[PUT] http://localhost:8080/api/backlog/updateProductBacklog/1 - Update Product Backlog: ProductBacklogServiceImpl.updateProductBacklog(..) in 1ms with result: project.gestionprojet.DTO.ProductBacklogDTO@75d47cbe
+[PUT] http://localhost:8080/api/backlog/updateProductBacklog/1 - Update Product Backlog: ProductBacklogServiceImpl.updateProductBacklog(..) in 3ms with result: project.gestionprojet.DTO.ProductBacklogDTO@32725d65
+[GET] http://localhost:8080/api/backlog/findProductBacklog/product%20backlog%20updated - Find Product Backlog By Nom: ProductBacklogServiceImpl.findProductBacklogByNom(..) in 2ms with result: project.gestionprojet.DTO.ProductBacklogDTO@33c37eeb
+[DELETE] http://localhost:8080/api/backlog/deleteProductBacklog/1 - Delete Product Backlog: ProductBacklogServiceImpl.deleteProductBacklog(..) in 0ms with result: null
+[DELETE] http://localhost:8080/api/backlog/deleteProductBacklog/1 - Delete Product Backlog: ProductBacklogServiceImpl.deleteProductBacklog(..) in 16ms with result: null
+[POST] http://localhost:8080/api/backlog/addProductBacklog - Add Product Backlog: ProductBacklogServiceImpl.addProductBacklog(..) in 189ms with result: project.gestionprojet.DTO.ProductBacklogDTO@6050836d
+[POST] http://localhost:8080/api/backlog/addProductBacklog - Add Product Backlog: ProductBacklogServiceImpl.addProductBacklog(..) in 9ms with result: project.gestionprojet.DTO.ProductBacklogDTO@1f60c806
+[DELETE] http://localhost:8080/api/backlog/deleteProductBacklog/15 - Delete Product Backlog: ProductBacklogServiceImpl.deleteProductBacklog(..) in 70ms with result: null
+[] http://localhost - Add Product Backlog: ProductBacklogServiceImpl.addProductBacklog(..) in 25ms with result: project.gestionprojet.DTO.ProductBacklogDTO@34a82874
+[] http://localhost - Update Product Backlog: ProductBacklogServiceImpl.updateProductBacklog(..) in 8ms with result: project.gestionprojet.DTO.ProductBacklogDTO@1a8251ba
+[] http://localhost - Add Product Backlog: ProductBacklogServiceImpl.addProductBacklog(..) in 4ms with result: project.gestionprojet.DTO.ProductBacklogDTO@317e9cf5
+[] http://localhost - Find Product Backlog By Nom: ProductBacklogServiceImpl.findProductBacklogByNom(..) in 102ms with result: project.gestionprojet.DTO.ProductBacklogDTO@33c7319e
+[] http://localhost - Add Product Backlog: ProductBacklogServiceImpl.addProductBacklog(..) in 33ms with result: project.gestionprojet.DTO.ProductBacklogDTO@3c48e78b
+[] http://localhost - Update Product Backlog: ProductBacklogServiceImpl.updateProductBacklog(..) in 13ms with result: project.gestionprojet.DTO.ProductBacklogDTO@15962623
+[] http://localhost - Add Product Backlog: ProductBacklogServiceImpl.addProductBacklog(..) in 8ms with result: project.gestionprojet.DTO.ProductBacklogDTO@735b2605
+[] http://localhost - Find Product Backlog By Nom: ProductBacklogServiceImpl.findProductBacklogByNom(..) in 84ms with result: project.gestionprojet.DTO.ProductBacklogDTO@70fda9bf
+[POST] http://localhost:8080/api/backlog/addProductBacklog - Add Product Backlog: ProductBacklogServiceImpl.addProductBacklog(..) in 34ms with result: project.gestionprojet.DTO.ProductBacklogDTO@7b547323
+[POST] https://localhost:8080/api/backlog/addProductBacklog - Add Product Backlog: ProductBacklogServiceImpl.addProductBacklog(..) in 10ms with result: project.gestionprojet.DTO.ProductBacklogDTO@1f874004
+[PUT] https://localhost:8080/api/backlog/updateProductBacklog/1 - Update Product Backlog: ProductBacklogServiceImpl.updateProductBacklog(..) in 47ms with result: project.gestionprojet.DTO.ProductBacklogDTO@4022b829
+[GET] https://localhost:8080/api/backlog/findProductBacklog/product%20backlog%20updated - Find Product Backlog By Nom: ProductBacklogServiceImpl.findProductBacklogByNom(..) in 12ms with result: project.gestionprojet.DTO.ProductBacklogDTO@2ba983f
+[POST] https://localhost:8080/api/backlog/addProductBacklog - Add Product Backlog: ProductBacklogServiceImpl.addProductBacklog(..) in 4ms with result: project.gestionprojet.DTO.ProductBacklogDTO@4fba6d79
+[DELETE] https://localhost:8080/api/backlog/deleteProductBacklog/4 - Delete Product Backlog: ProductBacklogServiceImpl.deleteProductBacklog(..) in 9ms with result: null
+[POST] https://localhost:8080/api/backlog/addProductBacklog - Add Product Backlog: ProductBacklogServiceImpl.addProductBacklog(..) in 9ms with result: project.gestionprojet.DTO.ProductBacklogDTO@3a47d8ed

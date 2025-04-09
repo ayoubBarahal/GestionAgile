@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import project.gestionprojet.Configuration.JwtTokenProvider;
 import project.gestionprojet.DTO.*;
 import project.gestionprojet.Entities.ERole;
-import project.gestionprojet.Entities.Role;
 import project.gestionprojet.Entities.User;
-import project.gestionprojet.Repositories.RoleRepository;
 import project.gestionprojet.Repositories.UserRepository;
 
 import java.util.List;
@@ -31,8 +29,6 @@ public class AuthController {
     @Autowired
     UserRepository userRepository;
 
-    @Autowired
-    RoleRepository roleRepository;
 
     @Autowired
     PasswordEncoder encoder;
@@ -83,25 +79,17 @@ public class AuthController {
         String strRole = signUpRequest.getRole();
 
         if (strRole == null || strRole.isEmpty()) {
-            Role developerRole = roleRepository.findByName(ERole.ROLE_DEVELOPER)
-                    .orElseThrow(() -> new RuntimeException("Error: Developer role not found"));
-            user.setRole(developerRole);
+            user.setRole(ERole.ROLE_DEVELOPER);
         } else {
             switch (strRole) {
                 case "product_owner":
-                    Role productOwnerRole = roleRepository.findByName(ERole.ROLE_PRODUCT_OWNER)
-                            .orElseThrow(() -> new RuntimeException("Error: Product Owner role not found"));
-                    user.setRole(productOwnerRole);
+                    user.setRole(ERole.ROLE_PRODUCT_OWNER);
                     break;
                 case "scrum_master":
-                    Role scrumMasterRole = roleRepository.findByName(ERole.ROLE_SCRUM_MASTER)
-                            .orElseThrow(() -> new RuntimeException("Error: Scrum Master role not found"));
-                    user.setRole(scrumMasterRole);
+                    user.setRole(ERole.ROLE_SCRUM_MASTER);
                     break;
                 default:
-                    Role developerRole = roleRepository.findByName(ERole.ROLE_DEVELOPER)
-                            .orElseThrow(() -> new RuntimeException("Error: Developer role not found"));
-                    user.setRole(developerRole);
+                    user.setRole(ERole.ROLE_DEVELOPER);
             }
         }
 

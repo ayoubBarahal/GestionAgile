@@ -36,13 +36,16 @@ public class JwtTokenProvider {
 
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
+        String role = userPrincipal.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .findFirst()
+                .orElse("ROLE_USER");
+
+        System.out.println("Storing role in token: " + role) ;
 
         return Jwts.builder()
                 .setSubject(userPrincipal.getUsername())
-                .claim("role", userPrincipal.getAuthorities().stream()
-                        .map(GrantedAuthority::getAuthority)
-                        .findFirst()
-                        .orElse("ROLE_USER"))
+                .claim("role", role)
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
                 .signWith(Keys.hmacShaKeyFor(jwtSecret.getBytes()), SignatureAlgorithm.HS512)
@@ -59,9 +62,12 @@ public class JwtTokenProvider {
                     .getBody();
 
             String username = claims.getSubject();
-            String roleString = claims.get("role", String.class);
+            // Récupérer directement le rôle du token
+            String role = claims.get("role", String.class);
 
-            String role = extractRoleFromString(roleString);
+            // Ajouter des logs pour déboguer
+            logger.info("Username from token: {}", username);
+            logger.info("Role from token: {}", role);
 
             Collection<GrantedAuthority> authorities = Collections.singletonList(
                     new SimpleGrantedAuthority(role)
@@ -81,15 +87,19 @@ public class JwtTokenProvider {
 
     private String extractRoleFromString(String roleString) {
         if (roleString != null) {
-            int startIndex = roleString.indexOf("name=") + 5;
-            int endIndex = roleString.indexOf(")", startIndex);
-            if (startIndex != -1 && endIndex != -1) {
-                return roleString.substring(startIndex, endIndex);
+            if (roleString.contains("name=")) {
+                int startIndex = roleString.indexOf("name=") + 5;
+                int endIndex = roleString.indexOf(")", startIndex);
+                if (startIndex != -1 && endIndex != -1) {
+                    return roleString.substring(startIndex, endIndex);
+                }
+            } else {
+                // Si c'est juste une chaîne simple, retournez-la directement
+                return roleString;
             }
         }
         return "ROLE_USER";
     }
-
 
     public boolean validateToken(String authToken) {
         try {

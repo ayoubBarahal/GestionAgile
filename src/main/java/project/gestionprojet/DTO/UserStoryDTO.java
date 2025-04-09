@@ -1,6 +1,7 @@
 package project.gestionprojet.DTO;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,7 @@ public class UserStoryDTO {
     private String role ;
     private Priority priority;
     private Status status;
+    @JsonIgnore
     private int idEpic;
 
 }

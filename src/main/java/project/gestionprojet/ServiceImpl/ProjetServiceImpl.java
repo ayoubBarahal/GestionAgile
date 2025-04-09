@@ -1,10 +1,12 @@
 package project.gestionprojet.ServiceImpl;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.stereotype.Service;
 import project.gestionprojet.DTO.ProjetDTO;
-import project.gestionprojet.Entities.ProductBacklog;
 import project.gestionprojet.Entities.Projet;
+import project.gestionprojet.Repositories.ProductBacklogRepo;
 import project.gestionprojet.Repositories.ProjetRepo;
 import project.gestionprojet.Service.ProjectService;
 
@@ -12,20 +14,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
+@Transactional
+@EnableWebSecurity
 public class ProjetServiceImpl implements ProjectService {
 
     @Autowired
     private ProjetRepo projetRepo;
 
+    @Autowired
+    private ProductBacklogRepo productBacklogRepo;
+
     @Override
     public ProjetDTO addProjet(ProjetDTO projetDTO) {
         Projet projet = new Projet();
-        projet.setIdProjet(projetDTO.getIdProjet());
         projet.setNomProjet(projetDTO.getNomProjet());
         Projet projetSaved = projetRepo.save(projet);
+        projetDTO.setIdProjet(projetSaved.getIdProjet());
         if(projetSaved != null) {
             return projetDTO;
         }
@@ -74,7 +80,11 @@ public class ProjetServiceImpl implements ProjectService {
     }
 
     @Override
+    @Transactional
     public void deleteProjet(int id) {
+
+        productBacklogRepo.deleteByProjetId(id);
+
         Optional<Projet> projetToDelete = projetRepo.findById(id);
         if (projetToDelete.isPresent()) {
              projetRepo.deleteById(id);

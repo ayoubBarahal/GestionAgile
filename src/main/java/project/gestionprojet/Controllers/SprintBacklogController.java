@@ -31,9 +31,9 @@ public class SprintBacklogController {
         return sprintBacklogService.getSprintBacklog(id);
     }
 
-    @PutMapping("/updateSprintBacklog")
-    public SprintBacklogDTO updateSprintBacklog(@RequestBody SprintBacklogDTO sprintBacklogDTO) {
-        return sprintBacklogService.updateSprintBacklog(sprintBacklogDTO);
+    @PutMapping("/updateSprintBacklog/{id}")
+    public SprintBacklogDTO updateSprintBacklog(@PathVariable int id,@RequestBody SprintBacklogDTO sprintBacklogDTO) {
+        return sprintBacklogService.updateSprintBacklog(id,sprintBacklogDTO);
     }
 
     @DeleteMapping("/deleteSprintBacklog/{id}")

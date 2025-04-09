@@ -111,6 +111,8 @@ public class SprintBacklogServiceImplTest {
     @Test
     public void testUpdateSprintBacklog() {
         // Configuration du mock
+        when(sprintBacklogRepo.findById(1)).thenReturn(Optional.of(sprintBacklog));
+
         SprintBacklog updatedSprintBacklog = new SprintBacklog();
         updatedSprintBacklog.setIdSprintBacklog(1);
         updatedSprintBacklog.setNom("Sprint 1 Updated");
@@ -120,20 +122,19 @@ public class SprintBacklogServiceImplTest {
 
         // Création du DTO d'entrée pour la mise à jour
         SprintBacklogDTO inputDTO = new SprintBacklogDTO();
-        inputDTO.setIdSprintBacklog(1);
         inputDTO.setNom("Sprint 1 Updated");
         inputDTO.setDescription("Description mise à jour");
 
-        // Exécution de la méthode à tester
-        SprintBacklogDTO result = sprintBacklogService.updateSprintBacklog(inputDTO);
+        // Exécution de la méthode à tester avec le nouveau paramètre id
+        SprintBacklogDTO result = sprintBacklogService.updateSprintBacklog(1, inputDTO);
 
         // Vérifications
         assertNotNull(result);
         assertEquals("Sprint 1 Updated", result.getNom());
         assertEquals("Description mise à jour", result.getDescription());
+        verify(sprintBacklogRepo, times(1)).findById(1);
         verify(sprintBacklogRepo, times(1)).save(any(SprintBacklog.class));
     }
-
     @Test
     public void testDeleteSprintBacklog() {
         // Configuration du mock

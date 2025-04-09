@@ -7,8 +7,6 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Data
@@ -31,8 +29,8 @@ public class User {
     @Size(max = 120)
     private String password;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Role role ;
+    @Enumerated(EnumType.STRING)
+    private ERole role ;
 
     public User(String username, String email, String password) {
         this.username = username;

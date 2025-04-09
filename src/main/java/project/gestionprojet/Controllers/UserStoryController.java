@@ -23,9 +23,9 @@ public class UserStoryController {
         return ResponseEntity.ok(createdUserStory);
     }
 
-    @PutMapping("/updateUserStory")
-    public ResponseEntity<UserStoryDTO> updateUserStory(@RequestBody UserStoryDTO userStoryDTO) {
-        UserStoryDTO updatedUserStory = userStoryService.updateUserStory(userStoryDTO);
+    @PutMapping("/updateUserStory/{id}")
+    public ResponseEntity<UserStoryDTO> updateUserStory(@PathVariable int id , @RequestBody UserStoryDTO userStoryDTO) {
+        UserStoryDTO updatedUserStory = userStoryService.updateUserStory(id,userStoryDTO);
         if (updatedUserStory != null) {
             return ResponseEntity.ok(updatedUserStory);
         } else {

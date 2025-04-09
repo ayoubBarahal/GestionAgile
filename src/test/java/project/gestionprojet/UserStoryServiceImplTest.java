@@ -75,7 +75,7 @@ class UserStoryServiceImplTest {
         when(userStoryRepo.findById(1)).thenReturn(Optional.of(existing));
         when(userStoryRepo.save(any(UserStory.class))).thenReturn(updated);
 
-        UserStoryDTO result = userStoryService.updateUserStory(dto);
+        UserStoryDTO result = userStoryService.updateUserStory(dto.getIdUserStory(),dto);
 
         assertNotNull(result);
         assertEquals("Updated Story", result.getTitre());

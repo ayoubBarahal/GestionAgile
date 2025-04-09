@@ -1,5 +1,6 @@
 package project.gestionprojet.ServiceImpl;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.gestionprojet.DTO.EpicDTO;
@@ -41,8 +42,13 @@ public class SprintBacklogServiceImpl implements SprintBacklogService {
     }
 
     @Override
-    public SprintBacklogDTO updateSprintBacklog(SprintBacklogDTO sprintBacklogDTO) {
-        SprintBacklog sprintBacklog=convertToEntity(sprintBacklogDTO) ;
+    public SprintBacklogDTO updateSprintBacklog(int id ,SprintBacklogDTO sprintBacklogDTO) {
+        SprintBacklog sprintBacklog=sprintBacklogRepo.findById(id).get() ;
+        if (sprintBacklog==null) {
+            throw new EntityNotFoundException();
+        }
+        sprintBacklog.setNom(sprintBacklogDTO.getNom());
+        sprintBacklog.setDescription(sprintBacklogDTO.getDescription());
        SprintBacklog sprintUpdated = sprintBacklogRepo.save(sprintBacklog);
         return convertToDto(sprintUpdated);
     }

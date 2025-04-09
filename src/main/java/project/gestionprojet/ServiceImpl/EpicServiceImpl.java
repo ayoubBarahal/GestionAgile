@@ -8,6 +8,7 @@ import project.gestionprojet.DTO.EpicDTO;
 import project.gestionprojet.Entities.Epic;
 import project.gestionprojet.Repositories.EpicRepo;
 import project.gestionprojet.Repositories.ProductBacklogRepo;
+import project.gestionprojet.Repositories.SprintBacklogRepo;
 import project.gestionprojet.Service.EpicService;
 
 import java.util.ArrayList;
@@ -20,6 +21,8 @@ public class EpicServiceImpl implements EpicService {
     private EpicRepo epicRepo;
     @Autowired
     private ProductBacklogRepo productBacklogRepo;
+    @Autowired
+    private SprintBacklogRepo sprintBacklogRepo;
 
     @Override
     public EpicDTO createEpic(EpicDTO ep) {
@@ -30,6 +33,7 @@ public class EpicServiceImpl implements EpicService {
         epic.setProductBacklog(productBacklogRepo.findById(ep.getIdProductBacklog()));
         epic.setTitre(ep.getTitre());
         epic.setDescription(ep.getDescription());
+        epic.setSprintBacklogs(sprintBacklogRepo.findById(ep.getIdSprintBacklog()).orElse(null));
         Epic epicSaved=epicRepo.save(epic);
         ep.setIdEpic(epicSaved.getIdEpic());
         return ep;
@@ -71,7 +75,6 @@ public class EpicServiceImpl implements EpicService {
     @Override
     public List<EpicDTO> getAllEpics() {
         List<Epic> epics = epicRepo.findAll();
-
         return convertToListDto(epics);
     }
 
@@ -79,9 +82,12 @@ public class EpicServiceImpl implements EpicService {
         List<EpicDTO> epicDTOsDTO = new ArrayList<>();
         for (Epic epic : epics) {
             EpicDTO epicDTO = new EpicDTO();
+            epicDTO.setIdEpic(epic.getIdEpic());
             epicDTO.setTitre(epic.getTitre());
             epicDTO.setDescription(epic.getDescription());
             epicDTO.setIdEpic(epic.getIdEpic());
+            epicDTO.setIdProductBacklog(epic.getProductBacklog().getIdProductBacklog());
+            epicDTO.setIdSprintBacklog(epic.getSprintBacklogs().getIdSprintBacklog());
             epicDTOsDTO.add(epicDTO);
         }
         return epicDTOsDTO;

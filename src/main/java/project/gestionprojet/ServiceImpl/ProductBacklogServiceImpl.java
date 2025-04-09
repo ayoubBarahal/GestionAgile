@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import project.gestionprojet.DTO.ProductBacklogDTO;
 import project.gestionprojet.Entities.ProductBacklog;
 import project.gestionprojet.Entities.Projet;
+import project.gestionprojet.Repositories.EpicRepo;
 import project.gestionprojet.Repositories.ProductBacklogRepo;
 import project.gestionprojet.Repositories.ProjetRepo;
 import project.gestionprojet.Service.ProductBacklogService;
@@ -24,6 +25,9 @@ public class ProductBacklogServiceImpl implements ProductBacklogService {
 
     @Autowired
     private ProjetRepo projetRepo;
+
+    @Autowired
+    private EpicRepo epicRepo;
 
 
     @Override
@@ -84,6 +88,9 @@ public class ProductBacklogServiceImpl implements ProductBacklogService {
 
     @Override
     public void deleteProductBacklog(int idProductBacklog) {
+
+        epicRepo.deleteByProductBacklogId(idProductBacklog);
+
         Optional<ProductBacklog> productBacklogToDelete = Optional.ofNullable(productBacklogRepo.findById(idProductBacklog));
         if (productBacklogToDelete.isPresent()) {
             productBacklogRepo.deleteById(idProductBacklog);

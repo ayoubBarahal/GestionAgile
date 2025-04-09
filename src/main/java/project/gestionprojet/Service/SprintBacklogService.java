@@ -9,6 +9,6 @@ public interface SprintBacklogService  {
     SprintBacklogDTO createSprintBacklog(SprintBacklogDTO sprintBacklog);
     SprintBacklogDTO getSprintBacklog(int id);
     List<SprintBacklogDTO> getSprintBacklogs();
-    SprintBacklogDTO updateSprintBacklog(SprintBacklogDTO sprintBacklog);
+    SprintBacklogDTO updateSprintBacklog(int id ,SprintBacklogDTO sprintBacklog);
     void deleteSprintBacklog(int id);
 }

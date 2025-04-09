@@ -38,8 +38,8 @@ public class SecurityConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/api/**")
-                .allowedOrigins("http://localhost:3000")
+        registry.addMapping("/**")
+                .allowedOrigins("http://localhost:3000","http://localhost:8080")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(false);
@@ -57,9 +57,15 @@ public class SecurityConfig implements WebMvcConfigurer {
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/swagger-ui/**").permitAll()
+                        .requestMatchers("/swagger-ui.html").permitAll()
+                        .requestMatchers("/v3/api-docs/**").permitAll()
+                        .requestMatchers("/swagger-resources/**").permitAll()
+                        .requestMatchers("/webjars/**").permitAll()
+
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/projet/**").hasAnyRole("PRODUCT_OWNER", "SCRUM_MASTER", "DEVELOPER")
-                        .requestMatchers("/api/backlog/**").hasAnyRole("PRODUCT_OWNER", "SCRUM_MASTER", "DEVELOPER")
+                        .requestMatchers("/api/projet/**").hasAnyRole("PRODUCT_OWNER")
+                        .requestMatchers("/api/backlog/**").hasAnyRole("PRODUCT_OWNER")
                         .requestMatchers("/api/epics/**").hasAnyRole("PRODUCT_OWNER", "SCRUM_MASTER")
                         .requestMatchers("/api/userStory/**").hasAnyRole("PRODUCT_OWNER", "SCRUM_MASTER")
                         .requestMatchers("/api/sprint/**").hasRole("SCRUM_MASTER")

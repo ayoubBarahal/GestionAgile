@@ -17,16 +17,12 @@ public class ProductBacklog {
     private int idProductBacklog ;
     private String nom ;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Projet projet ;
 
     @OneToMany
     private List<Epic> epics ;
 
-
-    public ProductBacklog(String nom ){
-        this.nom=nom ;
-    }
 
 
 }

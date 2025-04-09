@@ -2,10 +2,8 @@ package project.gestionprojet.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import project.gestionprojet.DTO.ProjetDTO;
-import project.gestionprojet.Entities.Projet;
 import project.gestionprojet.Service.ProjectService;
 
 import java.util.List;
@@ -42,9 +40,9 @@ public class ProjetController {
     }
 
     @DeleteMapping("/deleteProject/{id}")
-    public ResponseEntity<Void> deleteProjet(@PathVariable int id) {
+    public ResponseEntity<?> deleteProjet(@PathVariable int id) {
         projectService.deleteProjet(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("Projet is deleted Successfully");
     }
 
 

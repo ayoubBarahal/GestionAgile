@@ -3,9 +3,7 @@ package project.gestionprojet.ServiceImpl;
 import org.apache.velocity.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import project.gestionprojet.DTO.ProjetDTO;
 import project.gestionprojet.DTO.TaskDTO;
-import project.gestionprojet.Entities.Projet;
 import project.gestionprojet.Entities.Status;
 import project.gestionprojet.Entities.Task;
 import project.gestionprojet.Entities.UserStory;
@@ -15,7 +13,6 @@ import project.gestionprojet.Service.TaskService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -27,25 +24,40 @@ public class TaskServiceImpl implements TaskService {
     private UserStoryRepo userStoryRepo;
 
     @Override
-    public TaskDTO createTask(TaskDTO task) {
-        if (task==null){
-            throw new IllegalArgumentException("task "+task.getTitle()+" Not Found !");
+    public TaskDTO createTask(TaskDTO taskDTO) {
+        if (taskDTO == null) {
+            throw new IllegalArgumentException("TaskDTO is null - Not Found");
         }
-        Task newTask = new Task();
-        newTask.setTitle(task.getTitle());
-        newTask.setDescription(task.getDescription());
-        newTask.setStatus(task.getStatus());
-        UserStory userStory = userStoryRepo.findByIdUserStory(task.getIdUserStory());
-        newTask.setUserStory(userStory);
-        Task savedTask = taskRepo.save(newTask);
-        return new TaskDTO(savedTask.getIdTask(), savedTask.getTitle(), savedTask.getDescription(), savedTask.getStatus(),savedTask.getUserStory().getIdUserStory());
+
+        UserStory userStory = userStoryRepo.findByIdUserStory(taskDTO.getIdUserStory());
+        if (userStory == null) {
+            throw new ResourceNotFoundException("UserStory with id " + taskDTO.getIdUserStory() + " Not Found");
+        }
+
+        Task task = new Task();
+        task.setTitle(taskDTO.getTitle());
+        task.setDescription(taskDTO.getDescription());
+        task.setStatus(taskDTO.getStatus());
+        task.setUserStory(userStory);
+
+        Task savedTask = taskRepo.save(task);
+
+        TaskDTO savedDTO = new TaskDTO();
+        savedDTO.setIdTask(savedTask.getIdTask());
+        savedDTO.setTitle(savedTask.getTitle());
+        savedDTO.setDescription(savedTask.getDescription());
+        savedDTO.setStatus(savedTask.getStatus());
+        savedDTO.setIdUserStory(userStory.getIdUserStory());
+
+        return savedDTO;
     }
+
 
     @Override
     public TaskDTO updateTask(int idTask, TaskDTO task) {
         Task taskToUpdate = taskRepo.findById(idTask).get();
         if (taskToUpdate==null){
-             throw new IllegalArgumentException("task "+idTask+" Not Found !");
+            throw new IllegalArgumentException("task "+idTask+" Not Found !");
         }
         taskToUpdate.setTitle(task.getTitle());
         taskToUpdate.setDescription(task.getDescription());
@@ -58,20 +70,24 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void deleteTask(int idTask) {
-        Task taskToDelete = taskRepo.findById(idTask).get();
-        if (taskToDelete==null){
+
+        Optional<Task> task = taskRepo.findById(idTask);
+        if (task.isEmpty()){
             throw new IllegalArgumentException("task "+idTask+" Not Found !");
         }
+        Task taskToDelete = task.get();
         taskRepo.delete(taskToDelete);
     }
 
     @Override
     public Status getStatus(int idTask) {
-        Task task = taskRepo.findById(idTask).get();
-        if (task==null){
-           throw  new ResourceNotFoundException("task "+idTask+" Not Found !");
+        Optional<Task> task = taskRepo.findById(idTask);
+
+        if (task.isEmpty()){
+            throw  new ResourceNotFoundException("task "+idTask+" Not Found !");
         }
-        return task.getStatus();
+        Task task1 = task.get();
+        return task1.getStatus();
     }
 
 
@@ -101,12 +117,14 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Status updateStatus(int idTask, Status status) {
-        Task task = taskRepo.findById(idTask).get();
-        if (task==null){
+        Optional<Task> task = taskRepo.findById(idTask);
+
+        if (task.isEmpty()){
             throw new IllegalArgumentException("task "+idTask+" Not Found !");
         }
-        task.setStatus(status);
-        taskRepo.save(task);
+        Task task1 = task.get();
+        task1.setStatus(status);
+        taskRepo.save(task1);
         return status;
     }
 

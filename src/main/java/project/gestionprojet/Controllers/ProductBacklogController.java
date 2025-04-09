@@ -29,7 +29,7 @@ public class ProductBacklogController {
     @DeleteMapping("/deleteProductBacklog/{id}")
     public ResponseEntity<String> deleteProduct(@PathVariable int id) {
         pBService.deleteProductBacklog(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("Product Backlog deleted successfully");
     }
 
     @PutMapping("/updateProductBacklog/{id}")

@@ -1,5 +1,6 @@
 package project.gestionprojet.DTO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ public class EpicDTO {
     private int idEpic;
     private String titre;
     private String description;
+    @JsonIgnore
     private int idProductBacklog ;
     private int idSprintBacklog ;
 

@@ -9,7 +9,6 @@ import project.gestionprojet.Entities.Status;
 import project.gestionprojet.Entities.UserStory;
 import project.gestionprojet.Repositories.EpicRepo;
 import project.gestionprojet.Repositories.UserStoryRepo;
-import project.gestionprojet.Service.TaskService;
 import project.gestionprojet.Service.UserStoryService;
 
 import java.util.List;
@@ -36,10 +35,7 @@ public class UserStoryServiceImpl implements UserStoryService {
         userStoryDTO.setRole(userStory.getRole());
         userStoryDTO.setPriority(userStory.getPriority());
         userStoryDTO.setStatus(userStory.getStatus());
-
-//        if (userStory.getEpic() != null) {
-//            userStoryDTO.setIdEpic(userStory.getEpic().getIdEpic());
-//        }
+        userStoryDTO.setIdEpic(userStory.getEpic().getIdEpic());
 
         return userStoryDTO;
     }
@@ -56,6 +52,8 @@ public class UserStoryServiceImpl implements UserStoryService {
         userStory.setRole(userStoryDTO.getRole());
         userStory.setPriority(userStoryDTO.getPriority());
         userStory.setStatus(userStoryDTO.getStatus());
+        Epic epic = epicRepo.findById(userStoryDTO.getIdEpic()).orElse(null);
+        userStory.setEpic(epic);
 
         return userStory;
     }
@@ -63,23 +61,17 @@ public class UserStoryServiceImpl implements UserStoryService {
     @Override
     public UserStoryDTO createUserStory(UserStoryDTO userStoryDTO) {
         UserStory userStory = convertToUserStory(userStoryDTO);
-
-            Epic epic = epicRepo.findById(userStoryDTO.getIdEpic()).orElse(null);
-            userStory.setEpic(epic);
-
         UserStory savedUserStory = userStoryRepo.save(userStory);
-
         return convertToUserStoryDTO(savedUserStory);
     }
 
     @Override
-    public UserStoryDTO updateUserStory(UserStoryDTO userStoryDTO) {
-        return userStoryRepo.findById(userStoryDTO.getIdUserStory())
+    public UserStoryDTO updateUserStory(int id, UserStoryDTO userStoryDTO) {
+        return userStoryRepo.findById(id)
                 .map(existingUserStory -> {
                     UserStory updatedUserStory = convertToUserStory(userStoryDTO);
                     updatedUserStory.setIdUserStory(existingUserStory.getIdUserStory());
 
-                    // Récupérer et associer l'Epic si un ID est fourni
                     if (userStoryDTO.getIdEpic() > 0) {
                         Epic epic = epicRepo.findById(userStoryDTO.getIdEpic()).orElse(null);
                         if (epic != null) {
@@ -115,7 +107,6 @@ public class UserStoryServiceImpl implements UserStoryService {
         return userStory != null ? convertToUserStoryDTO(userStory) : null;
     }
 
-    // Méthode additionnelle pour récupérer toutes les user stories
     public List<UserStoryDTO> getAllUserStories() {
         return userStoryRepo.findAll()
                 .stream()
@@ -123,7 +114,6 @@ public class UserStoryServiceImpl implements UserStoryService {
                 .collect(Collectors.toList());
     }
 
-    // Méthode pour récupérer les user stories par Epic
     public List<UserStoryDTO> getUserStoriesByEpicId(int epicId) {
         return userStoryRepo.findByEpicIdEpic(epicId)
                 .stream()
@@ -131,7 +121,6 @@ public class UserStoryServiceImpl implements UserStoryService {
                 .collect(Collectors.toList());
     }
 
-    // Méthode pour récupérer les user stories par statut
     public List<UserStoryDTO> getUserStoriesByStatus(String status) {
         return userStoryRepo.findByStatus(Status.valueOf(status))
                 .stream()
@@ -139,7 +128,6 @@ public class UserStoryServiceImpl implements UserStoryService {
                 .collect(Collectors.toList());
     }
 
-    // Méthode pour récupérer les user stories par priorité
     public List<UserStoryDTO> getUserStoriesByPriority(String priority) {
         return userStoryRepo.findByPriority(Priority.valueOf(priority))
                 .stream()

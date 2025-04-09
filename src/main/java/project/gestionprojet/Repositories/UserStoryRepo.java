@@ -14,7 +14,10 @@ import java.util.List;
 public interface UserStoryRepo extends JpaRepository<UserStory, Integer> {
     UserStory findByIdUserStory(int idUserStory);
     UserStory findByTitre(String Titre);
-    List<UserStory> findByEpicIdEpic(int idEpic);
-    List<UserStory> findByStatus(Status status);
-    List<UserStory> findByPriority(Priority priority);
+    @Query("SELECT u from UserStory u where u.epic.idEpic=:idEpic")
+    List<UserStory> findByEpicIdEpic(@Param("idEpic")int idEpic);
+    @Query("SELECT u from UserStory u where u.epic IS NOT NULL AND u.status=:status")
+    List<UserStory> findByStatus(@Param("status") Status status);
+    @Query("SELECT u from UserStory u where u.epic IS NOT NULL AND u.priority=:priority")
+    List<UserStory> findByPriority(@Param("priority") Priority priority);
 }
