@@ -54,3 +54,26 @@
 [POST] https://localhost:8080/api/epics/add - Create Epic: EpicServiceImpl.createEpic(..) in 156ms with result: project.gestionprojet.DTO.EpicDTO@3a26096e
 [GET] https://localhost:8080/api/epics/all - Get All Epics: EpicServiceImpl.getAllEpics() in 31ms with result: [project.gestionprojet.DTO.EpicDTO@2959504e]
 [GET] https://localhost:8080/api/epics/all - Get All Epics: EpicServiceImpl.getAllEpics() in 149ms with result: [project.gestionprojet.DTO.EpicDTO@68bb9acd]
+[POST] https://localhost:8080/api/epics/add - Create Epic: EpicServiceImpl.createEpic(..) in 53ms with result: project.gestionprojet.DTO.EpicDTO@59fc7a89
+[GET] https://localhost:8080/api/epics/all - Get All Epics: EpicServiceImpl.getAllEpics() in 8ms with result: [project.gestionprojet.DTO.EpicDTO@3eccc932]
+[PUT] https://localhost:8080/api/epics/update/21 - Update Epic: EpicServiceImpl.updateEpic(..) in 18ms with result: project.gestionprojet.DTO.EpicDTO@17da2282
+[GET] https://localhost:8080/api/epics/productBacklog/1 - Find All Epic By Product Backlog: EpicServiceImpl.findAllEpicByProductBacklog(..) in 8ms with result: []
+[POST] https://localhost:8080/api/epics/add - Create Epic: EpicServiceImpl.createEpic(..) in 54ms with result: project.gestionprojet.DTO.EpicDTO@53074167
+[PUT] https://localhost:8080/api/epics/update/23 - Update Epic: EpicServiceImpl.updateEpic(..) in 57ms with result: project.gestionprojet.DTO.EpicDTO@5b88f0bb
+[POST] https://localhost:8080/api/epics/add - Create Epic: EpicServiceImpl.createEpic(..) in 130ms with result: project.gestionprojet.DTO.EpicDTO@1cc5c3a5
+[POST] https://localhost:8080/api/epics/add - Create Epic: EpicServiceImpl.createEpic(..) in 56ms with result: project.gestionprojet.DTO.EpicDTO@71fb9ce6
+[PUT] https://localhost:8080/api/epics/update/25 - Update Epic: EpicServiceImpl.updateEpic(..) in 58ms with result: project.gestionprojet.DTO.EpicDTO@145f0335
+[POST] https://localhost:8080/api/epics/add - Create Epic: EpicServiceImpl.createEpic(..) in 42ms with result: project.gestionprojet.DTO.EpicDTO@798ff589
+[PUT] https://localhost:8080/api/epics/update/26 - Update Epic: EpicServiceImpl.updateEpic(..) in 66ms with result: project.gestionprojet.DTO.EpicDTO@7a90bbe8
+[GET] https://localhost:8080/api/epics/all - Get All Epics: EpicServiceImpl.getAllEpics() in 6ms with result: []
+[POST] https://localhost:8080/api/epics/add - Create Epic: EpicServiceImpl.createEpic(..) in 17ms with result: project.gestionprojet.DTO.EpicDTO@1bd8eca1
+[POST] https://localhost:8080/api/epics/add - Create Epic: EpicServiceImpl.createEpic(..) in 48ms with result: project.gestionprojet.DTO.EpicDTO@202f41a7
+[PUT] https://localhost:8080/api/epics/update/28 - Update Epic: EpicServiceImpl.updateEpic(..) in 62ms with result: project.gestionprojet.DTO.EpicDTO@29410b3c
+[POST] https://localhost:8080/api/epics/add - Create Epic: EpicServiceImpl.createEpic(..) in 48ms with result: project.gestionprojet.DTO.EpicDTO@7b49e109
+[GET] https://localhost:8080/api/epics/all - Get All Epics: EpicServiceImpl.getAllEpics() in 10ms with result: [project.gestionprojet.DTO.EpicDTO@5f012f5]
+[GET] https://localhost:8080/api/epics/productBacklog/1 - Find All Epic By Product Backlog: EpicServiceImpl.findAllEpicByProductBacklog(..) in 44ms with result: [project.gestionprojet.DTO.EpicDTO@61d34718]
+[DELETE] https://localhost:8080/api/epics/delete/29 - Delete Epic: EpicServiceImpl.deleteEpic(..) in 57ms with result: null
+[GET] https://localhost:8080/api/epics/all - Get All Epics: EpicServiceImpl.getAllEpics() in 3ms with result: []
+[POST] https://localhost:8080/api/epics/add - Create Epic: EpicServiceImpl.createEpic(..) in 55ms with result: project.gestionprojet.DTO.EpicDTO@32cd8257
+[GET] https://localhost:8080/api/epics/all - Get All Epics: EpicServiceImpl.getAllEpics() in 7ms with result: [project.gestionprojet.DTO.EpicDTO@7af0b61]
+[POST] https://localhost:8080/api/epics/add - Create Epic: EpicServiceImpl.createEpic(..) in 58ms with result: project.gestionprojet.DTO.EpicDTO@4799643b

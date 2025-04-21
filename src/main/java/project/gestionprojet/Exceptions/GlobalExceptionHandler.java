@@ -31,5 +31,10 @@ public class GlobalExceptionHandler extends Exception{
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(UserExceptions.class)
+    public ResponseEntity<String> UserExceptions(NullPointerException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
+    }
+
 
 }

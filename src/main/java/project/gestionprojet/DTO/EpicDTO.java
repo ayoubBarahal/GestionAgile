@@ -14,7 +14,6 @@ public class EpicDTO {
     private int idEpic;
     private String titre;
     private String description;
-    @JsonIgnore
     private int idProductBacklog ;
     private int idSprintBacklog ;
 

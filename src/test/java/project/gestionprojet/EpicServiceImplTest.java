@@ -1,21 +1,23 @@
 package project.gestionprojet;
 
-
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import project.gestionprojet.DTO.EpicDTO;
 import project.gestionprojet.Entities.Epic;
 import project.gestionprojet.Entities.ProductBacklog;
+import project.gestionprojet.Entities.SprintBacklog;
 import project.gestionprojet.Repositories.EpicRepo;
 import project.gestionprojet.Repositories.ProductBacklogRepo;
+import project.gestionprojet.Repositories.SprintBacklogRepo;
 import project.gestionprojet.ServiceImpl.EpicServiceImpl;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,153 +35,194 @@ public class EpicServiceImplTest {
     @Mock
     private ProductBacklogRepo productBacklogRepo;
 
+    @Mock
+    private SprintBacklogRepo sprintBacklogRepo;
+
     @InjectMocks
     private EpicServiceImpl epicService;
 
     private EpicDTO epicDTO;
     private Epic epic;
     private ProductBacklog productBacklog;
+    private SprintBacklog sprintBacklog;
 
     @BeforeEach
     void setUp() {
-        // Initialiser les données de test
-        // Nous gardons idSprintBacklog dans le DTO même si nous ne l'utilisons pas dans le service
-        epicDTO = new EpicDTO(1, "Test Epic", "Test Description", 1, 2);
+        MockitoAnnotations.openMocks(this);
 
         productBacklog = new ProductBacklog();
         productBacklog.setIdProductBacklog(1);
+        productBacklog.setNom("Test Product Backlog");
+
+        sprintBacklog = new SprintBacklog();
+        sprintBacklog.setIdSprintBacklog(1);
+        sprintBacklog.setNom("Test Sprint Backlog");
 
         epic = new Epic();
         epic.setIdEpic(1);
         epic.setTitre("Test Epic");
         epic.setDescription("Test Description");
         epic.setProductBacklog(productBacklog);
+        epic.setSprintBacklogs(sprintBacklog);
+
+        epicDTO = new EpicDTO();
+        epicDTO.setIdEpic(1);
+        epicDTO.setTitre("Test Epic");
+        epicDTO.setDescription("Test Description");
+        epicDTO.setIdProductBacklog(1);
+        epicDTO.setIdSprintBacklog(1);
     }
 
     @Test
-    void testCreateEpic() {
-        // Arrange
-        when(productBacklogRepo.findById(anyInt())).thenReturn(productBacklog);
+    void testCreateEpic_Success() {
+        when(productBacklogRepo.findById(anyInt())).thenReturn(Optional.of(productBacklog));
+        when(sprintBacklogRepo.findById(anyInt())).thenReturn(Optional.of(sprintBacklog));
         when(epicRepo.save(any(Epic.class))).thenReturn(epic);
 
-        // Act
         EpicDTO result = epicService.createEpic(epicDTO);
 
-        // Assert
-        assertNotNull(result);
-        assertEquals(epicDTO.getIdEpic(), result.getIdEpic());
-        assertEquals(epicDTO.getTitre(), result.getTitre());
-        assertEquals(epicDTO.getDescription(), result.getDescription());
-        assertEquals(epicDTO.getIdProductBacklog(), epicDTO.getIdProductBacklog());
-        // Nous ne testons pas idSprintBacklog puisqu'il n'est pas utilisé dans le service
-        verify(epicRepo, times(1)).save(any(Epic.class));
-    }
-
-
-//    @Test
-//    void testCreateEpicWithNullDTO() {
-//        // Act & Assert
-//        assertThrows(EntityNotFoundException.class, () -> epicService.createEpic(null));
-//        verify(epicRepo, never()).save(any(Epic.class));
-//    }
-
-    @Test
-    void testUpdateEpic() {
-        // Arrange
-        when(epicRepo.findById(anyInt())).thenReturn(Optional.of(epic));
-        when(productBacklogRepo.findById(anyInt())).thenReturn(productBacklog);
-        when(epicRepo.save(any(Epic.class))).thenReturn(epic);
-
-        // Act
-        EpicDTO result = epicService.updateEpic(1, epicDTO);
-
-        // Assert
         assertNotNull(result);
         assertEquals(epicDTO.getTitre(), result.getTitre());
         assertEquals(epicDTO.getDescription(), result.getDescription());
-        verify(epicRepo, times(1)).save(any(Epic.class));
+        assertEquals(epicDTO.getIdProductBacklog(), result.getIdProductBacklog());
+        assertEquals(epicDTO.getIdSprintBacklog(), result.getIdSprintBacklog());
+
+        verify(productBacklogRepo).findById(epicDTO.getIdProductBacklog());
+        verify(sprintBacklogRepo).findById(epicDTO.getIdSprintBacklog());
+        verify(epicRepo).save(any(Epic.class));
     }
 
     @Test
-    void testUpdateEpicNotFound() {
-        // Arrange
-        when(epicRepo.findById(anyInt())).thenReturn(Optional.empty());
+    void testCreateEpic_NullEpic() {
+        Exception exception = assertThrows(EntityNotFoundException.class, () -> {
+            epicService.createEpic(null);
+        });
 
-        // Act & Assert
-        assertThrows(EntityNotFoundException.class, () -> epicService.updateEpic(1, epicDTO));
+        assertEquals("Epic is null", exception.getMessage());
+
         verify(epicRepo, never()).save(any(Epic.class));
     }
 
     @Test
-    void testDeleteEpic() {
-        // Arrange
+    void testUpdateEpic_Success() {
         when(epicRepo.findById(anyInt())).thenReturn(Optional.of(epic));
+        when(productBacklogRepo.findById(anyInt())).thenReturn(Optional.of(productBacklog));
+        when(epicRepo.save(any(Epic.class))).thenReturn(epic);
 
-        // Act
-        epicService.deleteEpic(1);
+        EpicDTO updatedDTO = new EpicDTO();
+        updatedDTO.setIdEpic(1);
+        updatedDTO.setTitre("Updated Epic");
+        updatedDTO.setDescription("Updated Description");
+        updatedDTO.setIdProductBacklog(1);
+        updatedDTO.setIdSprintBacklog(1);
 
-        // Assert
-        verify(epicRepo, times(1)).delete(any(Epic.class));
+        EpicDTO result = epicService.updateEpic(1, updatedDTO);
+
+        assertNotNull(result);
+        assertEquals(updatedDTO.getTitre(), result.getTitre());
+        assertEquals(updatedDTO.getDescription(), result.getDescription());
+        assertEquals(1, result.getIdEpic());
+
+        verify(epicRepo).findById(1);
+        verify(productBacklogRepo).findById(1);
+        verify(epicRepo).save(any(Epic.class));
     }
 
     @Test
-    void testDeleteEpicNotFound() {
-        // Arrange
+    void testUpdateEpic_NotFound() {
         when(epicRepo.findById(anyInt())).thenReturn(Optional.empty());
 
-        // Act & Assert
-        assertThrows(EntityNotFoundException.class, () -> epicService.deleteEpic(1));
+        EpicDTO updatedDTO = new EpicDTO();
+        updatedDTO.setIdEpic(1);
+        updatedDTO.setTitre("Updated Epic");
+        updatedDTO.setDescription("Updated Description");
+        updatedDTO.setIdProductBacklog(1);
+        updatedDTO.setIdSprintBacklog(1);
+
+        Exception exception = assertThrows(EntityNotFoundException.class, () -> {
+            epicService.updateEpic(1, updatedDTO);
+        });
+
+        assertEquals("Epic not found", exception.getMessage());
+
+        verify(epicRepo).findById(1);
+        verify(epicRepo, never()).save(any(Epic.class));
+    }
+
+    @Test
+    void testDeleteEpic_Success() {
+        when(epicRepo.findById(anyInt())).thenReturn(Optional.of(epic));
+        doNothing().when(epicRepo).delete(any(Epic.class));
+
+        epicService.deleteEpic(1);
+
+        verify(epicRepo).findById(1);
+        verify(epicRepo).delete(epic);
+    }
+
+    @Test
+    void testDeleteEpic_NotFound() {
+        when(epicRepo.findById(anyInt())).thenReturn(Optional.empty());
+
+        Exception exception = assertThrows(EntityNotFoundException.class, () -> {
+            epicService.deleteEpic(1);
+        });
+
+        assertEquals("Epic a supprimer est introuvable", exception.getMessage());
+
+        verify(epicRepo).findById(1);
         verify(epicRepo, never()).delete(any(Epic.class));
     }
 
     @Test
     void testFindAllEpicByProductBacklog() {
-        // Arrange
-        List<Epic> epicList = Arrays.asList(epic);
-        when(productBacklogRepo.findById(anyInt())).thenReturn(productBacklog);
-        when(epicRepo.findAllByProductBacklog(any(ProductBacklog.class))).thenReturn(epicList);
+        List<Epic> epics = new ArrayList<>();
+        epics.add(epic);
 
-        // Act
-        List<EpicDTO> result = epicService.findAllEpicByProductBacklog(1);
+        when(productBacklogRepo.findById(anyInt())).thenReturn(Optional.of(productBacklog));
+        when(epicRepo.findAllByProductBacklog(any(ProductBacklog.class))).thenReturn(epics);
 
-        // Assert
-        assertNotNull(result);
-        assertEquals(1, result.size());
-        assertEquals(epic.getTitre(), result.get(0).getTitre());
-        assertEquals(epic.getDescription(), result.get(0).getDescription());
+        List<EpicDTO> results = epicService.findAllEpicByProductBacklog(1);
+
+        assertNotNull(results);
+        assertEquals(1, results.size());
+        assertEquals(epic.getTitre(), results.get(0).getTitre());
+        assertEquals(epic.getDescription(), results.get(0).getDescription());
+
+        verify(productBacklogRepo).findById(1);
+        verify(epicRepo).findAllByProductBacklog(productBacklog);
     }
 
     @Test
     void testGetAllEpics() {
-        // Arrange
-        List<Epic> epicList = Arrays.asList(epic);
-        when(epicRepo.findAll()).thenReturn(epicList);
+        List<Epic> epics = new ArrayList<>();
+        epics.add(epic);
 
-        // Act
-        List<EpicDTO> result = epicService.getAllEpics();
+        when(epicRepo.findAll()).thenReturn(epics);
 
-        // Assert
-        assertNotNull(result);
-        assertEquals(1, result.size());
-        assertEquals(epic.getTitre(), result.get(0).getTitre());
-        assertEquals(epic.getDescription(), result.get(0).getDescription());
+        List<EpicDTO> results = epicService.getAllEpics();
+
+        assertNotNull(results);
+        assertEquals(1, results.size());
+        assertEquals(epic.getTitre(), results.get(0).getTitre());
+        assertEquals(epic.getDescription(), results.get(0).getDescription());
+
+        verify(epicRepo).findAll();
     }
 
     @Test
     void testConvertToListDto() {
-        // Arrange
-        List<Epic> epicList = Arrays.asList(epic);
+        List<Epic> epics = new ArrayList<>();
+        epics.add(epic);
 
-        // Act
-        List<EpicDTO> result = epicService.convertToListDto(epicList);
+        List<EpicDTO> results = epicService.convertToListDto(epics);
 
-        // Assert
-        assertNotNull(result);
-        assertEquals(1, result.size());
-        assertEquals(epic.getTitre(), result.get(0).getTitre());
-        assertEquals(epic.getDescription(), result.get(0).getDescription());
-        assertEquals(epic.getIdEpic(), result.get(0).getIdEpic());
-        // Nous ne testons pas idSprintBacklog car il n'est pas défini dans la méthode convertToListDto
+        assertNotNull(results);
+        assertEquals(1, results.size());
+        assertEquals(epic.getTitre(), results.get(0).getTitre());
+        assertEquals(epic.getDescription(), results.get(0).getDescription());
+        assertEquals(epic.getIdEpic(), results.get(0).getIdEpic());
+        assertEquals(epic.getProductBacklog().getIdProductBacklog(), results.get(0).getIdProductBacklog());
+        assertEquals(epic.getSprintBacklogs().getIdSprintBacklog(), results.get(0).getIdSprintBacklog());
     }
-
 }

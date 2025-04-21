@@ -33,7 +33,6 @@ public class SprintBacklogServiceImplTest {
     public void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        // Initialisation des objets de test
         sprintBacklog = new SprintBacklog();
         sprintBacklog.setIdSprintBacklog(1);
         sprintBacklog.setNom("Sprint 1");
@@ -47,22 +46,18 @@ public class SprintBacklogServiceImplTest {
 
     @Test
     public void testCreateSprintBacklog() {
-        // Configuration du mock
         when(sprintBacklogRepo.save(any(SprintBacklog.class))).thenAnswer(invocation -> {
             SprintBacklog savedSprintBacklog = invocation.getArgument(0);
             savedSprintBacklog.setIdSprintBacklog(1);
             return savedSprintBacklog;
         });
 
-        // Création du DTO d'entrée
         SprintBacklogDTO inputDTO = new SprintBacklogDTO();
         inputDTO.setNom("Sprint 1");
         inputDTO.setDescription("Description du Sprint 1");
 
-        // Exécution de la méthode à tester
         SprintBacklogDTO result = sprintBacklogService.createSprintBacklog(inputDTO);
 
-        // Vérifications
         assertNotNull(result);
         assertEquals(1, result.getIdSprintBacklog());
         assertEquals("Sprint 1", result.getNom());
@@ -72,13 +67,10 @@ public class SprintBacklogServiceImplTest {
 
     @Test
     public void testGetSprintBacklog() {
-        // Configuration du mock
         when(sprintBacklogRepo.findById(1)).thenReturn(Optional.of(sprintBacklog));
 
-        // Exécution de la méthode à tester
         SprintBacklogDTO result = sprintBacklogService.getSprintBacklog(1);
 
-        // Vérifications
         assertNotNull(result);
         assertEquals(1, result.getIdSprintBacklog());
         assertEquals("Sprint 1", result.getNom());
@@ -88,7 +80,6 @@ public class SprintBacklogServiceImplTest {
 
     @Test
     public void testGetSprintBacklogs() {
-        // Configuration du mock
         SprintBacklog sprintBacklog2 = new SprintBacklog();
         sprintBacklog2.setIdSprintBacklog(2);
         sprintBacklog2.setNom("Sprint 2");
@@ -97,10 +88,8 @@ public class SprintBacklogServiceImplTest {
         List<SprintBacklog> sprintBacklogs = Arrays.asList(sprintBacklog, sprintBacklog2);
         when(sprintBacklogRepo.findAll()).thenReturn(sprintBacklogs);
 
-        // Exécution de la méthode à tester
         List<SprintBacklogDTO> results = sprintBacklogService.getSprintBacklogs();
 
-        // Vérifications
         assertNotNull(results);
         assertEquals(2, results.size());
         assertEquals("Sprint 1", results.get(0).getNom());
@@ -110,7 +99,6 @@ public class SprintBacklogServiceImplTest {
 
     @Test
     public void testUpdateSprintBacklog() {
-        // Configuration du mock
         when(sprintBacklogRepo.findById(1)).thenReturn(Optional.of(sprintBacklog));
 
         SprintBacklog updatedSprintBacklog = new SprintBacklog();
@@ -120,15 +108,12 @@ public class SprintBacklogServiceImplTest {
 
         when(sprintBacklogRepo.save(any(SprintBacklog.class))).thenReturn(updatedSprintBacklog);
 
-        // Création du DTO d'entrée pour la mise à jour
         SprintBacklogDTO inputDTO = new SprintBacklogDTO();
         inputDTO.setNom("Sprint 1 Updated");
         inputDTO.setDescription("Description mise à jour");
 
-        // Exécution de la méthode à tester avec le nouveau paramètre id
         SprintBacklogDTO result = sprintBacklogService.updateSprintBacklog(1, inputDTO);
 
-        // Vérifications
         assertNotNull(result);
         assertEquals("Sprint 1 Updated", result.getNom());
         assertEquals("Description mise à jour", result.getDescription());
@@ -137,24 +122,19 @@ public class SprintBacklogServiceImplTest {
     }
     @Test
     public void testDeleteSprintBacklog() {
-        // Configuration du mock
         when(sprintBacklogRepo.findById(1)).thenReturn(Optional.of(sprintBacklog));
         doNothing().when(sprintBacklogRepo).delete(any(SprintBacklog.class));
 
-        // Exécution de la méthode à tester
         sprintBacklogService.deleteSprintBacklog(1);
 
-        // Vérifications
         verify(sprintBacklogRepo, times(1)).findById(1);
         verify(sprintBacklogRepo, times(1)).delete(any(SprintBacklog.class));
     }
 
     @Test
     public void testConvertToDto_SingleEntity() {
-        // Exécution de la méthode à tester
         SprintBacklogDTO result = sprintBacklogService.convertToDto(sprintBacklog);
 
-        // Vérifications
         assertNotNull(result);
         assertEquals(1, result.getIdSprintBacklog());
         assertEquals("Sprint 1", result.getNom());
@@ -163,19 +143,15 @@ public class SprintBacklogServiceImplTest {
 
     @Test
     public void testConvertToEntity() {
-        // Exécution de la méthode à tester
         SprintBacklog result = sprintBacklogService.convertToEntity(sprintBacklogDTO);
 
-        // Vérifications
         assertNotNull(result);
         assertEquals("Sprint 1", result.getNom());
         assertEquals("Description du Sprint 1", result.getDescription());
-        // Notez que l'ID n'est pas défini dans la méthode convertToEntity
     }
 
     @Test
     public void testConvertToDto_ListOfEntities() {
-        // Préparation des données de test
         SprintBacklog sprintBacklog2 = new SprintBacklog();
         sprintBacklog2.setIdSprintBacklog(2);
         sprintBacklog2.setNom("Sprint 2");
@@ -183,10 +159,8 @@ public class SprintBacklogServiceImplTest {
 
         List<SprintBacklog> sprintBacklogs = Arrays.asList(sprintBacklog, sprintBacklog2);
 
-        // Exécution de la méthode à tester
         List<SprintBacklogDTO> results = sprintBacklogService.convertToDto(sprintBacklogs);
 
-        // Vérifications
         assertNotNull(results);
         assertEquals(2, results.size());
         assertEquals(1, results.get(0).getIdSprintBacklog());

@@ -9,16 +9,18 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import project.gestionprojet.Entities.ProductBacklog;
 
+import java.util.Optional;
+
 @Repository
 public interface ProductBacklogRepo extends JpaRepository<ProductBacklog, Integer> {
 
     @Query("SELECT pb FROM ProductBacklog pb WHERE pb.nom = :nom")
     ProductBacklog findByNom(@Param("nom") String nom);
-    ProductBacklog findById(int id);
 
     @Modifying
     @Transactional
     @Query("DELETE FROM ProductBacklog p WHERE p.projet.idProjet = :projetId")
     void deleteByProjetId(@Param("projetId") Integer projetId);
 
+    Optional<ProductBacklog> findByIdProductBacklog(int idProductBacklog);
 }

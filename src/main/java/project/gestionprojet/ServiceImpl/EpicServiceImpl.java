@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.gestionprojet.DTO.EpicDTO;
 import project.gestionprojet.Entities.Epic;
+import project.gestionprojet.Entities.ProductBacklog;
 import project.gestionprojet.Repositories.EpicRepo;
 import project.gestionprojet.Repositories.ProductBacklogRepo;
 import project.gestionprojet.Repositories.SprintBacklogRepo;
@@ -30,7 +31,13 @@ public class EpicServiceImpl implements EpicService {
             throw new EntityNotFoundException("Epic is null");
         }
         Epic epic = new Epic();
-        epic.setProductBacklog(productBacklogRepo.findById(ep.getIdProductBacklog()));
+        System.out.println("ID Product Backlog: " + ep.getIdProductBacklog());
+        ProductBacklog productBacklog = productBacklogRepo.findById(ep.getIdProductBacklog()).orElse(null);
+        System.out.println("Product Backlog: " + productBacklog.getIdProductBacklog());
+        if (productBacklog == null) {
+            throw new EntityNotFoundException("Product Backlog not found");
+        }
+        epic.setProductBacklog(productBacklog);
         epic.setTitre(ep.getTitre());
         epic.setDescription(ep.getDescription());
         epic.setSprintBacklogs(sprintBacklogRepo.findById(ep.getIdSprintBacklog()).orElse(null));
@@ -47,7 +54,8 @@ public class EpicServiceImpl implements EpicService {
             Epic epicToUpdate = epic.get();
             epicToUpdate.setTitre(ep.getTitre());
             epicToUpdate.setDescription(ep.getDescription());
-            epicToUpdate.setProductBacklog(productBacklogRepo.findById(ep.getIdEpic()));
+            epicToUpdate.setProductBacklog(productBacklogRepo.findById(ep.getIdEpic()).orElse(null));
+            epicToUpdate.setSprintBacklogs(sprintBacklogRepo.findById(ep.getIdSprintBacklog()).orElse(null));
             epicRepo.save(epicToUpdate);
             ep.setIdEpic(id);
             return ep;
@@ -67,7 +75,7 @@ public class EpicServiceImpl implements EpicService {
 
     @Override
     public List<EpicDTO> findAllEpicByProductBacklog(int intProductBacklog) {
-        List<Epic> epicDTOs = epicRepo.findAllByProductBacklog(productBacklogRepo.findById(intProductBacklog));
+        List<Epic> epicDTOs = epicRepo.findAllByProductBacklog(productBacklogRepo.findByIdProductBacklog(intProductBacklog).orElse(null));
 
         return convertToListDto(epicDTOs);
     }
@@ -86,8 +94,8 @@ public class EpicServiceImpl implements EpicService {
             epicDTO.setTitre(epic.getTitre());
             epicDTO.setDescription(epic.getDescription());
             epicDTO.setIdEpic(epic.getIdEpic());
-            epicDTO.setIdProductBacklog(epic.getProductBacklog().getIdProductBacklog());
-            epicDTO.setIdSprintBacklog(epic.getSprintBacklogs().getIdSprintBacklog());
+            epicDTO.setIdProductBacklog(productBacklogRepo.findById(epic.getProductBacklog().getIdProductBacklog()).orElse(null).getIdProductBacklog());
+            epicDTO.setIdSprintBacklog(sprintBacklogRepo.findById(epic.getSprintBacklogs().getIdSprintBacklog()).orElse(null).getIdSprintBacklog());
             epicDTOsDTO.add(epicDTO);
         }
         return epicDTOsDTO;

@@ -66,7 +66,7 @@ public class ProductBacklogServiceImpl implements ProductBacklogService {
 
     @Override
     public ProductBacklogDTO updateProductBacklog(int id, ProductBacklogDTO productBacklog) {
-        Optional<ProductBacklog> existingBacklogOptional = Optional.ofNullable(productBacklogRepo.findById(id));
+        Optional<ProductBacklog> existingBacklogOptional = Optional.ofNullable(productBacklogRepo.findById(id).orElse(null));
 
         if (existingBacklogOptional.isEmpty()) {
             throw new IllegalStateException("Le product backlog avec l'ID " + id + " n'existe pas");
@@ -91,7 +91,7 @@ public class ProductBacklogServiceImpl implements ProductBacklogService {
 
         epicRepo.deleteByProductBacklogId(idProductBacklog);
 
-        Optional<ProductBacklog> productBacklogToDelete = Optional.ofNullable(productBacklogRepo.findById(idProductBacklog));
+        Optional<ProductBacklog> productBacklogToDelete = Optional.ofNullable(productBacklogRepo.findById(idProductBacklog).orElse(null));
         if (productBacklogToDelete.isPresent()) {
             productBacklogRepo.deleteById(idProductBacklog);
         }

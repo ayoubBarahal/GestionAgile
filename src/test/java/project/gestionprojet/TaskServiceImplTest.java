@@ -64,14 +64,11 @@ public class TaskServiceImplTest {
 
     @Test
     void testCreateTask_Success() {
-        // Given
         when(userStoryRepo.findByIdUserStory(anyInt())).thenReturn(userStory);
         when(taskRepo.save(any(Task.class))).thenReturn(task);
 
-        // When
         TaskDTO result = taskService.createTask(taskDTO);
 
-        // Then
         assertNotNull(result);
         assertEquals(taskDTO.getTitle(), result.getTitle());
         assertEquals(taskDTO.getDescription(), result.getDescription());
@@ -84,10 +81,8 @@ public class TaskServiceImplTest {
 
     @Test
     void testCreateTask_NullTask() {
-        // Given
         taskDTO = null;
 
-        // When & Then
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             taskService.createTask(taskDTO);
         });
@@ -97,7 +92,6 @@ public class TaskServiceImplTest {
 
     @Test
     void testUpdateTask_Success() {
-        // Given
         when(taskRepo.findById(anyInt())).thenReturn(Optional.of(task));
         when(userStoryRepo.findByIdUserStory(anyInt())).thenReturn(userStory);
         when(taskRepo.save(any(Task.class))).thenReturn(task);
@@ -106,10 +100,8 @@ public class TaskServiceImplTest {
         taskDTO.setDescription("Updated Description");
         taskDTO.setStatus(Status.InProgress);
 
-        // When
         TaskDTO result = taskService.updateTask(1, taskDTO);
 
-        // Then
         assertNotNull(result);
         assertEquals(taskDTO.getTitle(), result.getTitle());
         assertEquals(taskDTO.getDescription(), result.getDescription());
@@ -123,43 +115,34 @@ public class TaskServiceImplTest {
 
     @Test
     void testDeleteTask_Success() {
-        // Given
         when(taskRepo.findById(anyInt())).thenReturn(Optional.of(task));
 
-        // When
         taskService.deleteTask(1);
 
-        // Then
         verify(taskRepo, times(1)).findById(anyInt());
         verify(taskRepo, times(1)).delete(any(Task.class));
     }
 
     @Test
     void testGetStatus_Success() {
-        // Given
         when(taskRepo.findById(anyInt())).thenReturn(Optional.of(task));
 
-        // When
         Status result = taskService.getStatus(1);
 
-        // Then
         assertEquals(Status.ToDo, result);
         verify(taskRepo, times(1)).findById(anyInt());
     }
 
     @Test
     void testGetAllTasksByUserStory_Success() {
-        // Given
         List<Task> tasks = new ArrayList<>();
         tasks.add(task);
 
         when(userStoryRepo.findByIdUserStory(anyInt())).thenReturn(userStory);
         when(taskRepo.findAllByUserStory(any(UserStory.class))).thenReturn(tasks);
 
-        // When
         List<TaskDTO> result = taskService.getAllTasksByUserStory(1);
 
-        // Then
         assertNotNull(result);
         assertFalse(result.isEmpty());
         assertEquals(1, result.size());
@@ -174,13 +157,11 @@ public class TaskServiceImplTest {
 
     @Test
     void testGetAllTasksByUserStory_EmptyList() {
-        // Given
         List<Task> emptyList = new ArrayList<>();
 
         when(userStoryRepo.findByIdUserStory(anyInt())).thenReturn(userStory);
         when(taskRepo.findAllByUserStory(any(UserStory.class))).thenReturn(emptyList);
 
-        // When & Then
         Exception exception = assertThrows(ResourceNotFoundException.class, () -> {
             taskService.getAllTasksByUserStory(1);
         });
@@ -193,10 +174,8 @@ public class TaskServiceImplTest {
 
     @Test
     void testGetAllTasksByUserStory_UserStoryNotFound() {
-        // Given
         when(userStoryRepo.findByIdUserStory(anyInt())).thenReturn(null);
 
-        // When & Then
         Exception exception = assertThrows(ResourceNotFoundException.class, () -> {
             taskService.getAllTasksByUserStory(1);
         });
@@ -208,18 +187,5 @@ public class TaskServiceImplTest {
         verify(taskRepo, never()).findAllByUserStory(any(UserStory.class));
     }
 
-//    @Test
-//    void testUpdateStatus_Success() {
-//        // Given
-//        when(taskRepo.findById(anyInt())).thenReturn(Optional.of(task));
-//        when(taskRepo.save(any(Task.class))).thenReturn(task);
-//
-//        // When
-//        Status result = taskService.updateStatus(1, Status.Done);
-//
-//        // Then
-//        assertEquals(Status.Done, result);
-//        verify(taskRepo, times(1)).findById(anyInt());
-//        verify(taskRepo, times(1)).save(any(Task.class));
-//    }
+
 }

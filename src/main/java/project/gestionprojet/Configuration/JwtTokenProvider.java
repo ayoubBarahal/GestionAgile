@@ -62,7 +62,6 @@ public class JwtTokenProvider {
                     .getBody();
 
             String username = claims.getSubject();
-            // Récupérer directement le rôle du token
             String role = claims.get("role", String.class);
 
             // Ajouter des logs pour déboguer
@@ -85,21 +84,7 @@ public class JwtTokenProvider {
         }
     }
 
-    private String extractRoleFromString(String roleString) {
-        if (roleString != null) {
-            if (roleString.contains("name=")) {
-                int startIndex = roleString.indexOf("name=") + 5;
-                int endIndex = roleString.indexOf(")", startIndex);
-                if (startIndex != -1 && endIndex != -1) {
-                    return roleString.substring(startIndex, endIndex);
-                }
-            } else {
-                // Si c'est juste une chaîne simple, retournez-la directement
-                return roleString;
-            }
-        }
-        return "ROLE_USER";
-    }
+
 
     public boolean validateToken(String authToken) {
         try {

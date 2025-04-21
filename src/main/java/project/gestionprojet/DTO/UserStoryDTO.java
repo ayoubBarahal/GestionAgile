@@ -23,7 +23,6 @@ public class UserStoryDTO {
     private String role ;
     private Priority priority;
     private Status status;
-    @JsonIgnore
     private int idEpic;
 
 }
