@@ -1,3 +1,3 @@
 ## Documentation
 
-Vous pouvez consulter notre documentation complète dans [ce document PDF]("/Product_Backlog.pdf").
+Vous pouvez consulter notre product backlog dans le pdf ci_dessus.
