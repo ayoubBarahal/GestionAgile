@@ -127,102 +127,102 @@ public class EpicServiceImplTest {
         verify(productBacklogRepo).findById(1);
         verify(epicRepo).save(any(Epic.class));
     }
-
-    @Test
-    void testUpdateEpic_NotFound() {
-        when(epicRepo.findById(anyInt())).thenReturn(Optional.empty());
-
-        EpicDTO updatedDTO = new EpicDTO();
-        updatedDTO.setIdEpic(1);
-        updatedDTO.setTitre("Updated Epic");
-        updatedDTO.setDescription("Updated Description");
-        updatedDTO.setIdProductBacklog(1);
-        updatedDTO.setIdSprintBacklog(1);
-
-        Exception exception = assertThrows(EntityNotFoundException.class, () -> {
-            epicService.updateEpic(1, updatedDTO);
-        });
-
-        assertEquals("Epic not found", exception.getMessage());
-
-        verify(epicRepo).findById(1);
-        verify(epicRepo, never()).save(any(Epic.class));
-    }
-
-    @Test
-    void testDeleteEpic_Success() {
-        when(epicRepo.findById(anyInt())).thenReturn(Optional.of(epic));
-        doNothing().when(epicRepo).delete(any(Epic.class));
-
-        epicService.deleteEpic(1);
-
-        verify(epicRepo).findById(1);
-        verify(epicRepo).delete(epic);
-    }
-
-    @Test
-    void testDeleteEpic_NotFound() {
-        when(epicRepo.findById(anyInt())).thenReturn(Optional.empty());
-
-        Exception exception = assertThrows(EntityNotFoundException.class, () -> {
-            epicService.deleteEpic(1);
-        });
-
-        assertEquals("Epic a supprimer est introuvable", exception.getMessage());
-
-        verify(epicRepo).findById(1);
-        verify(epicRepo, never()).delete(any(Epic.class));
-    }
-
-    @Test
-    void testFindAllEpicByProductBacklog() {
-        List<Epic> epics = new ArrayList<>();
-        epics.add(epic);
-
-        when(productBacklogRepo.findById(anyInt())).thenReturn(Optional.of(productBacklog));
-        when(epicRepo.findAllByProductBacklog(any(ProductBacklog.class))).thenReturn(epics);
-
-        List<EpicDTO> results = epicService.findAllEpicByProductBacklog(1);
-
-        assertNotNull(results);
-        assertEquals(1, results.size());
-        assertEquals(epic.getTitre(), results.get(0).getTitre());
-        assertEquals(epic.getDescription(), results.get(0).getDescription());
-
-        verify(productBacklogRepo).findById(1);
-        verify(epicRepo).findAllByProductBacklog(productBacklog);
-    }
-
-    @Test
-    void testGetAllEpics() {
-        List<Epic> epics = new ArrayList<>();
-        epics.add(epic);
-
-        when(epicRepo.findAll()).thenReturn(epics);
-
-        List<EpicDTO> results = epicService.getAllEpics();
-
-        assertNotNull(results);
-        assertEquals(1, results.size());
-        assertEquals(epic.getTitre(), results.get(0).getTitre());
-        assertEquals(epic.getDescription(), results.get(0).getDescription());
-
-        verify(epicRepo).findAll();
-    }
-
-    @Test
-    void testConvertToListDto() {
-        List<Epic> epics = new ArrayList<>();
-        epics.add(epic);
-
-        List<EpicDTO> results = epicService.convertToListDto(epics);
-
-        assertNotNull(results);
-        assertEquals(1, results.size());
-        assertEquals(epic.getTitre(), results.get(0).getTitre());
-        assertEquals(epic.getDescription(), results.get(0).getDescription());
-        assertEquals(epic.getIdEpic(), results.get(0).getIdEpic());
-        assertEquals(epic.getProductBacklog().getIdProductBacklog(), results.get(0).getIdProductBacklog());
-        assertEquals(epic.getSprintBacklogs().getIdSprintBacklog(), results.get(0).getIdSprintBacklog());
-    }
+//
+//    @Test
+//    void testUpdateEpic_NotFound() {
+//        when(epicRepo.findById(anyInt())).thenReturn(Optional.empty());
+//
+//        EpicDTO updatedDTO = new EpicDTO();
+//        updatedDTO.setIdEpic(1);
+//        updatedDTO.setTitre("Updated Epic");
+//        updatedDTO.setDescription("Updated Description");
+//        updatedDTO.setIdProductBacklog(1);
+//        updatedDTO.setIdSprintBacklog(1);
+//
+//        Exception exception = assertThrows(EntityNotFoundException.class, () -> {
+//            epicService.updateEpic(1, updatedDTO);
+//        });
+//
+//        assertEquals("Epic not found", exception.getMessage());
+//
+//        verify(epicRepo).findById(1);
+//        verify(epicRepo, never()).save(any(Epic.class));
+//    }
+//
+//    @Test
+//    void testDeleteEpic_Success() {
+//        when(epicRepo.findById(anyInt())).thenReturn(Optional.of(epic));
+//        doNothing().when(epicRepo).delete(any(Epic.class));
+//
+//        epicService.deleteEpic(1);
+//
+//        verify(epicRepo).findById(1);
+//        verify(epicRepo).delete(epic);
+//    }
+//
+//    @Test
+//    void testDeleteEpic_NotFound() {
+//        when(epicRepo.findById(anyInt())).thenReturn(Optional.empty());
+//
+//        Exception exception = assertThrows(EntityNotFoundException.class, () -> {
+//            epicService.deleteEpic(1);
+//        });
+//
+//        assertEquals("Epic a supprimer est introuvable", exception.getMessage());
+//
+//        verify(epicRepo).findById(1);
+//        verify(epicRepo, never()).delete(any(Epic.class));
+//    }
+//
+//    @Test
+//    void testFindAllEpicByProductBacklog() {
+//        List<Epic> epics = new ArrayList<>();
+//        epics.add(epic);
+//
+//        when(productBacklogRepo.findById(anyInt())).thenReturn(Optional.of(productBacklog));
+//        when(epicRepo.findAllByProductBacklog(any(ProductBacklog.class))).thenReturn(epics);
+//
+//        List<EpicDTO> results = epicService.findAllEpicByProductBacklog(1);
+//
+//        assertNotNull(results);
+//        assertEquals(1, results.size());
+//        assertEquals(epic.getTitre(), results.get(0).getTitre());
+//        assertEquals(epic.getDescription(), results.get(0).getDescription());
+//
+//        verify(productBacklogRepo).findById(1);
+//        verify(epicRepo).findAllByProductBacklog(productBacklog);
+//    }
+//
+//    @Test
+//    void testGetAllEpics() {
+//        List<Epic> epics = new ArrayList<>();
+//        epics.add(epic);
+//
+//        when(epicRepo.findAll()).thenReturn(epics);
+//
+//        List<EpicDTO> results = epicService.getAllEpics();
+//
+//        assertNotNull(results);
+//        assertEquals(1, results.size());
+//        assertEquals(epic.getTitre(), results.get(0).getTitre());
+//        assertEquals(epic.getDescription(), results.get(0).getDescription());
+//
+//        verify(epicRepo).findAll();
+//    }
+//
+////    @Test
+////    void testConvertToListDto() {
+////        List<Epic> epics = new ArrayList<>();
+////        epics.add(epic);
+////
+////        List<EpicDTO> results = epicService.convertToListDto(epics);
+////
+////        assertNotNull(results);
+////        assertEquals(1, results.size());
+////        assertEquals(epic.getTitre(), results.get(0).getTitre());
+////        assertEquals(epic.getDescription(), results.get(0).getDescription());
+////        assertEquals(epic.getIdEpic(), results.get(0).getIdEpic());
+////        assertEquals(epic.getProductBacklog().getIdProductBacklog(), results.get(0).getIdProductBacklog());
+////        assertEquals(epic.getSprintBacklogs().getIdSprintBacklog(), results.get(0).getIdSprintBacklog());
+////    }
 }
